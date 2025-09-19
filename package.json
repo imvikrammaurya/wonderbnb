@@ -10,11 +10,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cookie": "^1.0.2",
+    "cookie-parser": "^1.4.7",
     "ejs": "^3.1.10",
     "ejs-mate": "^4.0.0",
     "express": "^5.1.0",
     "joi": "^18.0.1",
     "method-override": "^3.0.0",
-    "mongoose": "^8.18.0"
+    "mongoose": "^8.18.0",
+    "parser": "^0.1.4"
   }
 }

@@ -12,5 +12,12 @@ module.exports.listingSchema = Joi.object({
             url: Joi.string().allow("", null),
             filename: Joi.string().allow("", null),
         }).allow(null),
-    }).required(), // <--- Ensure this line exists and the file is saved!
+    }).required(), // This ensures the 'listing' object exists
+});
+
+module.exports.reviewSchema = Joi.object({
+    review: Joi.object({
+        rating: Joi.number().required().min(1).max(5),
+        comment: Joi.string().required()
+    }).required()
 });
