@@ -4,7 +4,9 @@ const Listing = require("../models/listing.js");
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/wonderlust";
 main().then(() => {
-    console.log("Connect to mongodb");
+    console.log("Connected to mongodb");
+    // initialize DB after connection is established
+    // initDB().catch(err => console.error("Init DB error:", err));
 }).catch(err =>{
     console.log(err);
 })
@@ -13,7 +15,8 @@ async function main() {
 };
 
 const initDB = async () =>{
-    Listing.deleteMany({});
+    await Listing.deleteMany({});
+    initData.data = initData.data.map((obj) => ({...obj, owner: new mongoose.Types.ObjectId("68d2486f76c678f17ca382e0")}));
     await Listing.insertMany(initData.data); 
     console.log("data was initialised");
 }

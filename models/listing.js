@@ -12,15 +12,13 @@ const listingSchema = new Schema ({
        required : true,
     },
     image: {
-  filename: {
-    type: String,
-    default: "https://static.toiimg.com/thumb/msid-118821086,width-1280,height-720,resizemode-4/118821086.jpg"
-  },
-  url: {
-    type: String,
-    default: "https://static.vecteezy.com/system/resources/previews/012/400/885/large_2x/tropical-sunset-beach-and-sky-background-as-exotic-summer-landscape-with-beach-swing-or-hammock-and-white-sand-and-calm-sea-beach-banner-paradise-island-beach-vacation-or-summer-holiday-destination-photo.jpg"
-  }
-},
+        type: Object,
+        default: {
+            filename: "listingimage",
+            url: "https://images.unsplash.com/photo-1473773508845-188df298d2d1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fG5hdHVyYWx8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60",
+        },
+        set: (v) => v.url === "" ? { url: "https://images.unsplash.com/photo-1473773508845-188df298d2d1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fG5hdHVyYWx8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60", filename: "listingimage" } : v,
+    },
 
     price: {
        type: Number,
@@ -31,7 +29,7 @@ const listingSchema = new Schema ({
        required : true,
     },
     country : {
-       type: String,
+       type: String, 
        required : true,
     },
     reviews: [
@@ -39,7 +37,11 @@ const listingSchema = new Schema ({
          type : Schema.Types.ObjectId,
          ref: "Review",
       }
-    ]
+    ],
+    owner : {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
 });
 
 listingSchema.post("findOneAndDelete", async (listing) => {
