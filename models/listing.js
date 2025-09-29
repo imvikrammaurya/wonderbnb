@@ -12,13 +12,9 @@ const listingSchema = new Schema ({
        required : true,
     },
     image: {
-        type: Object,
-        default: {
-            filename: "listingimage",
-            url: "https://images.unsplash.com/photo-1473773508845-188df298d2d1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fG5hdHVyYWx8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60",
-        },
-        set: (v) => v.url === "" ? { url: "https://images.unsplash.com/photo-1473773508845-188df298d2d1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fG5hdHVyYWx8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60", filename: "listingimage" } : v,
-    },
+        url: String,
+        filename: String,
+   },
 
     price: {
        type: Number,
