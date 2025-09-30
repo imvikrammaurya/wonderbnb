@@ -5,7 +5,7 @@
 
        
     <h3>Edit This Listing</h3>
-    <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" novalidate class="needs-validation">
+    <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" novalidate class="needs-validation" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
             <input name="listing[title]" value="<%= listing.title %>" type="text" class="form-control" required>
@@ -21,16 +21,20 @@
         </div>
 
 
-        <div class="mb-3">
-            <label for="imageUrl" class="form-label">Image URL</label>
-            <input name="listing[image][url]" value="<%= listing.image.url %>" type="text" class="form-control" required>
-            <div class="invalid-feedback">Please add image url</div>
+        <div>
+            Orginal listing Image <br>
+            <img src="<%= orginalImageUrl %>" alt="">
         </div>
+
         <div class="mb-3">
+            <label for="imageUrl" class="form-label">Upload New image</label>
+            <input name="image"  type="file" class="form-control">
+        </div>
+        <!-- <div class="mb-3">
             <label for="imageFilename" class="form-label">Image Alt Text</label>
             <input name="listing[image][filename]" value="<%= listing.image.filename %>" type="text" class="form-control" required>
             <div class="invalid-feedback">Provide some alt text</div>
-        </div>
+        </div> -->
 
 
         <div class="row">
@@ -57,7 +61,7 @@
         </div>
         
         
-        <button type="submit" class="btn btn-dark mt-3 add-btn">Update</button>
+        <button type="submit" class="btn btn-dark mt-3 mb-5 add-btn">Edit</button>
         
     </form>
      </div>
