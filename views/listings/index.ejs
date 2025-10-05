@@ -65,72 +65,83 @@
   }
 </style>
     <!-- <h3>All listings</h3> -->
-     <div class="d-flex align-items-center">
+     <div class="row align-items-center mt-3">
 
-  <div class="position-relative flex-grow-1">
-    
-    <button class="btn filter-scroll-btn position-absolute top-50 start-0 translate-middle-y" id="scroll-left" style="z-index: 10;">
-      <i class="fa-solid fa-chevron-left"></i>
-    </button>
+  <div class="col-9">
+    <div class="position-relative">
+      <button class="btn filter-scroll-btn position-absolute top-50 start-0 translate-middle-y" id="scroll-left" style="z-index: 10;">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
 
-    <div id="filters">
-      <div class="filter">
-        <div><i class="fa-solid fa-fire-flame-curved"></i></div>
-        <p>Trending</p>
+      <div id="filters">
+        <div class="filter">
+          <div><i class="fa-solid fa-fire-flame-curved"></i></div>
+          <p>Trending</p>
+        </div>
+        <div class="filter">
+          <div><i class="fa-solid fa-bed"></i></div>
+          <p>Rooms</p>
+        </div>
+        <div class="filter">
+          <div><i class="fa-solid fa-city"></i></div>
+          <p>Iconic Cities</p>
+        </div>
+        <div class="filter">
+          <div><i class="fa-solid fa-mountain-city"></i></div>
+          <p>Mountains</p>
+        </div>
+        <div class="filter">
+          <div><i class="fa-brands fa-fort-awesome"></i></div>
+          <p>Castles</p>
+        </div>
+        <div class="filter">
+          <div><i class="fa-solid fa-person-swimming"></i></div>
+          <p>Amazing Pools</p>
+        </div>
+        <div class="filter">
+          <div><i class="fa-solid fa-snowflake"></i></div>
+          <p>Arctic</p>
+        </div>
+        <div class="filter">
+          <div><i class="fa-solid fa-campground"></i></div>
+          <p>Camping</p>
+        </div>
+        <div class="filter">
+          <div><i class="fa-solid fa-igloo"></i></div>
+          <p>Dome</p>
+        </div>
+        <div class="filter">
+          <div><i class="fa-solid fa-ship"></i></div>
+          <p>Boats</p>
+        </div>
+        <div class="filter">
+          <div><i class="fa-solid fa-cow"></i></div>
+          <p>Farms</p>
+        </div>
       </div>
-      <div class="filter">
-        <div><i class="fa-solid fa-bed"></i></div>
-        <p>Rooms</p>
-      </div>
-      <div class="filter">
-        <div><i class="fa-solid fa-city"></i></div>
-        <p>Iconic Cities</p>
-      </div>
-      <div class="filter">
-        <div><i class="fa-solid fa-mountain-city"></i></div>
-        <p>Mountains</p>
-      </div>
-      <div class="filter">
-        <div><i class="fa-brands fa-fort-awesome"></i></div>
-        <p>Castles</p>
-      </div>
-      <div class="filter">
-        <div><i class="fa-solid fa-person-swimming"></i></div>
-        <p>Amazing Pools</p>
-      </div>
-      <div class="filter">
-        <div><i class="fa-solid fa-snowflake"></i></div>
-        <p>Arctic</p>
-      </div>
-      <div class="filter">
-        <div><i class="fa-solid fa-campground"></i></div>
-        <p>Camping</p>
-      </div>
-      <div class="filter">
-        <div><i class="fa-solid fa-igloo"></i></div>
-        <p>Dome</p>
-      </div>
-      <div class="filter">
-        <div><i class="fa-solid fa-ship"></i></div>
-        <p>Boats</p>
-      </div>
-      <div class="filter">
-        <div><i class="fa-solid fa-cow"></i></div>
-        <p>Farms</p>
+
+      <button class="btn filter-scroll-btn position-absolute top-50 end-0 translate-middle-y" id="scroll-right" style="z-index: 10;">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="col-3 d-flex justify-content-end">
+    <div class="tax-toggle">
+      <div class="form-check form-switch form-check-reverse">
+        <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
+        <label class="form-check-label" for="switchCheckDefault">Display total after taxes</label>
       </div>
     </div>
+  </div>
 
+</div>
     <button class="btn filter-scroll-btn position-absolute top-50 end-0 translate-middle-y" id="scroll-right" style="z-index: 10;">
       <i class="fa-solid fa-chevron-right"></i>
     </button>
   </div>
 
-  <div class="tax-toggle ms-auto ps-4">
-    <div class="form-check form-switch form-check-reverse">
-      <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
-      <label class="form-check-label" for="switchCheckDefault">Display total after taxes</label>
-    </div>
-  </div>
+ 
 </div>
     <div class="container">
 <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 justify-content-center mt-3" >
