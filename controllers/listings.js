@@ -71,3 +71,14 @@ module.exports.destroyListing = async(req, res) => {
      req.flash('success', `Successfully deleted`);
     res.redirect("/listings");
 };
+
+// In controllers/listings.js
+
+module.exports.index = async (req, res) => {
+  const { category } = req.query; // Get category from query
+  const filter = category ? { category } : {}; // Create filter object
+
+  const allListings = await Listing.find(filter); // Apply filter
+
+  res.render("listings/index.ejs", { allListings, category });
+};
