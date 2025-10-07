@@ -19,6 +19,7 @@
     padding: 0.5rem 4rem 0.5rem 4rem;
     font-size: 0.9rem;
   }
+  
 </style>
 
 <nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
@@ -29,23 +30,39 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link active" href="/listings">Explore</a>
+        <a class="nav-link" href="/listings">Explore</a>
+        <div class="navbar-nav mx-auto">
+        </div>
+
+      <div class="navbar-nav d-md-none my-2">
+        <div class="tax-toggle">
+            <div class="form-check form-switch form-check-reverse">
+              <input class="form-check-input tax-switch" type="checkbox" role="switch" id="switchCheckMobile">
+              <label class="form-check-label" for="switchCheckMobile">Display total after taxes</label>
+            </div>
+        </div>
       </div>
       <div class="navbar-nav ms-auto">
+        </div>
+
+      </div>
+
+      <div class="navbar-nav mx-auto">
         <form class="d-flex" role="search">
-      <input class="form-control me-2 search-input" type="search" placeholder="Search Destinations"/>
-      <button class="btn search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
-    </form>
+          <input class="form-control me-2 search-inp" type="search" placeholder="Search Destinations">
+          <button class="btn search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+        </form>
       </div>
+
       <div class="navbar-nav ms-auto">
-        <a class="nav-link " href="/listings/new">Wonderbnb your home</a>
+        <a class="nav-link" href="/listings/new">Wonderbnb your home</a>
         <% if(!currUser){ %>
-          <a class="nav-link active" href="/signup"><b>SignUp</b></a>
-        <a class="nav-link" href="/login"><b>Login</b></a>
+          <a class="nav-link" href="/signup"><b>Sign Up</b></a>
+          <a class="nav-link" href="/login"><b>Login</b></a>
         <% } %>
         <% if(currUser){ %>
-        <a class="nav-link" href="/logout">Logout</a>
-         <% } %>
+          <a class="nav-link" href="/logout"><b>Logout</b></a>
+        <% } %>
       </div>
     </div>
   </div>
