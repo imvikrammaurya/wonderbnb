@@ -24,6 +24,33 @@ body{
     color: #222222 !important;
 }
 
+/* In style.css */
+
+.search-btn {
+  background-color: #fe423d !important;
+  color: white !important;
+  border-radius: 25px !important;
+  padding: 0 1rem 0 1rem !important;
+  /* Add these two lines */
+  display: flex;
+  align-items: center;
+}
+
+.search-btn i {
+  margin-right: 0.5rem; /* Adds space between icon and text */
+}
+
+/* In style.css */
+
+/* This media query applies the style only on screens 768px and wider (desktop) */
+@media (min-width: 768px) {
+  .navbar-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
 /* Footer  */
 .f-info-links a {
     text-decoration: none;
@@ -170,6 +197,34 @@ body{
     border-radius: 0.5rem;
     margin-top: 0.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+     .d-md-none .search-btn {
+    min-width: 50px;
+  }
+ 
+  .position-relative {
+    position: relative;
+  }
+
+
+  .search-inp-mobile {
+    padding-right: 3rem !important;
+  }
+
+  .search-btn-mobile {
+
+    position: absolute;
+    right: 8px; 
+    top: 50%;
+    transform: translateY(-50%);
+
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+  }
+  .search-btn-mobile i {
+    color: #222 !important; 
+    font-size: 1.1rem;
+  }
   }
 }
 
