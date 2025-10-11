@@ -228,3 +228,74 @@ body{
   }
 }
 
+
+
+/* New Search Bar Styles */
+.search-bar {
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    padding: 0.5rem;
+    background-color: white;
+}
+
+.search-bar-item {
+    padding: 0 1rem;
+    border-right: 1px solid #ddd;
+}
+
+.search-bar-item:last-of-type {
+    border-right: none;
+}
+
+.search-bar-item label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: block;
+}
+
+.search-bar-item input {
+    border: none;
+    outline: none;
+    background: transparent;
+}
+
+.guest-item input {
+    cursor: pointer;
+}
+
+/* Guest Dropdown Menu Styles */
+.guest-dropdown-menu {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 65px; /* Position it below the navbar */
+    right: 25%;
+    transform: translateX(15%);
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    padding: 1rem;
+    width: 280px;
+    z-index: 1050;
+}
+
+.guest-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.guest-counter {
+    display: flex;
+    align-items: center;
+}
+
+.counter-btn {
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    background: white;
+    color: #222;
+    margin: 0 0.5rem;
+}

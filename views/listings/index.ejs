@@ -228,6 +228,68 @@ taxSwitches.forEach((taxSwitch) => {
     }
   });
 });
+
+// In views/listings/index.ejs <script> tag
+
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Initialize Litepicker for Date Range
+    const datePicker = new Litepicker({
+        element: document.getElementById('dates'),
+        singleMode: false,
+        tooltipText: {
+            one: 'night',
+            other: 'nights'
+        },
+        format: 'DD MMM',
+    });
+
+    // 2. Guest Dropdown Logic
+    const guestInput = document.getElementById('guests');
+    const guestDropdown = document.getElementById('guest-dropdown');
+    
+    guestInput.addEventListener('click', (event) => {
+        event.stopPropagation(); // Prevents click from closing it immediately
+        guestDropdown.style.display = guestDropdown.style.display === 'block' ? 'none' : 'block';
+    });
+
+    // Close dropdown if clicking outside
+    document.addEventListener('click', (event) => {
+        if (!guestInput.contains(event.target) && !guestDropdown.contains(event.target)) {
+            guestDropdown.style.display = 'none';
+        }
+    });
+
+    // 3. Counter Logic
+    let adults = 1;
+    let children = 0;
+    const adultsCountEl = document.getElementById('adults-count');
+    const childrenCountEl = document.getElementById('children-count');
+
+    function updateGuestInput() {
+        let guestText = `${adults} Adult${adults > 1 ? 's' : ''}`;
+        if (children > 0) {
+            guestText += `, ${children} Child${children > 1 ? 'ren' : ''}`;
+        }
+        guestInput.value = guestText;
+    }
+    updateGuestInput(); // Initial value
+
+    document.querySelectorAll('.counter-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            const type = button.dataset.type;
+            const action = button.dataset.action;
+
+            if (type === 'adults') {
+                adults = action === 'increment' ? adults + 1 : Math.max(1, adults - 1);
+                adultsCountEl.textContent = adults;
+            } else {
+                children = action === 'increment' ? children + 1 : Math.max(0, children - 1);
+                childrenCountEl.textContent = children;
+            }
+            updateGuestInput();
+        });
+    });
+});
 </script>
 </body>
 

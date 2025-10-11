@@ -41,12 +41,55 @@
         <a class="nav-link" href="/listings">Explore</a>
       </div>
 
+      
+
+
       <div class="navbar-nav navbar-center d-none d-md-block">
-        <form class="d-flex" role="search">
-          <input class="form-control me-2 search-inp" type="search" placeholder="Search Destinations">
-          <button class="btn search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
-        </form>
+  <form action="/search" method="GET" class="d-flex search-bar">
+    
+    <div class="search-bar-item">
+      <label for="location">Location</label>
+      <input type="text" id="location" name="location" placeholder="Search destinations">
+    </div>
+
+    <div class="search-bar-item">
+      <label for="dates">Dates</label>
+      <input type="text" id="dates" name="dates" placeholder="Add dates">
+    </div>
+
+    <div class="search-bar-item guest-item">
+      <label for="guests">Guests</label>
+      <input type="text" id="guests" name="guests" placeholder="Add guests" readonly>
+    </div>
+
+    <button class="btn search-btn" type="submit">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
+  </form>
+
+  <div id="guest-dropdown" class="guest-dropdown-menu">
+    <div class="guest-option">
+      <span>Adults</span>
+      <div class="guest-counter">
+        <button type="button" class="counter-btn" data-type="adults" data-action="decrement">-</button>
+        <span id="adults-count">1</span>
+        <button type="button" class="counter-btn" data-type="adults" data-action="increment">+</button>
       </div>
+    </div>
+    <div class="guest-option">
+      <span>Children</span>
+      <div class="guest-counter">
+        <button type="button" class="counter-btn" data-type="children" data-action="decrement">-</button>
+        <span id="children-count">0</span>
+        <button type="button" class="counter-btn" data-type="children" data-action="increment">+</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
 
       <div class="navbar-nav d-md-none my-2">
         <div class="tax-toggle">
