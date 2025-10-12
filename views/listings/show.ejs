@@ -12,6 +12,24 @@
           </p>
           <p><%= listing.description %></p>
 
+          <% if (listing.averageRating > 0) { %>
+  <%
+    let ratingClass = "";
+    if (listing.averageRating < 2) ratingClass = "rating-red";
+    else if (listing.averageRating <= 3.5) ratingClass = "rating-yellow";
+    else if (listing.averageRating <= 4.7) ratingClass = "rating-green";
+    else ratingClass = "rating-dark-green";
+  %>
+  <div class="show-rating">
+    <div class="rating-score <%= ratingClass %>">
+      <b><i class="fa-solid fa-star"></i> <%= listing.averageRating.toFixed(1) %></b>
+    </div>
+    <div class="rating-count">
+      <%= listing.reviews.length %> Rating<%= listing.reviews.length > 1 ? 's' : '' %>
+    </div>
+  </div>
+<% } %>
+
           <% if (listing.category && listing.category.length > 0) { %>
             <h5>Categories</h5>
             <p>
@@ -31,7 +49,7 @@
 
       <% if(currUser && listing.owner._id.equals(currUser._id)) { %>
         <div class="btns mt-3">
-          <a href="/listings/<%= listing._id %>/edit" class="btn btn-danger me-2">Edit</a>
+          <a href="/listings/<%= listing._id %>/edit" class="btn btn-danger edit-btn me-2">Edit</a>
           <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST" style="display:inline;">
             <button class="btn btn-dark">Delete</button>
           </form>

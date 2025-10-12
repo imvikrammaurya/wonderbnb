@@ -38,6 +38,10 @@ const listingSchema = new Schema ({
       type: Schema.Types.ObjectId,
       ref: "User",
     },
+    averageRating: {
+    type: Number,
+    default: 0,
+  },
     category: {
     type: [String],
     enum: [
