@@ -195,3 +195,7 @@
   -webkit-transition: background-position .7s;
   transition: background-position .7s;
 }
+
+.card-body .starability-result {
+    margin-left: 0.5rem; /* You can adjust this value (e.g., 5px) as needed */
+}

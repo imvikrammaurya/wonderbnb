@@ -24,50 +24,44 @@
 
 <nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/listings"><i class="fa-solid fa-umbrella-beach"></i></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="d-block d-md-none my-2">
-        <form class="d-flex w-100 position-relative" role="search">
-          <input class="form-control search-inp-mobile" type="search" placeholder="Search Destinations">
-          <button class="btn search-btn-mobile" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-        </form>
+    <div class="d-flex d-md-none align-items-center w-100">
+      <a class="navbar-brand" href="/listings"><i class="fa-solid fa-umbrella-beach"></i></a>
+      
+      <div class="search-bar-mobile-trigger flex-grow-1 mx-2" data-bs-toggle="modal" data-bs-target="#searchModal">
+        <div class="search-bar-mobile-text">Search</div>
+        <div class="search-bar-mobile-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
       </div>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <a class="navbar-brand d-none d-md-block" href="/listings"><i class="fa-solid fa-umbrella-beach"></i></a>
 
       <div class="navbar-nav">
         <a class="nav-link" href="/listings">Explore</a>
       </div>
 
-      
-
-
       <div class="navbar-nav navbar-center d-none d-md-block">
-  <form action="/search" method="GET" class="d-flex search-bar">
-    
-    <div class="search-bar-item">
-      <label for="location">Location</label>
-      <input type="text" id="location" name="location" placeholder="Search destinations">
+        <form action="/search" method="GET" class="d-flex search-bar">
+          <div class="search-bar-item"><label for="location">Location</label><input type="text" id="location" name="location" placeholder="Search destinations"></div>
+          <div class="search-bar-item"><label for="dates">Dates</label><input type="text" id="dates" name="dates" placeholder="Add dates"></div>
+          <div class="search-bar-item guest-item"><label for="guests">Guests</label><input type="text" id="guests" name="guests" placeholder="Add guests" readonly></div>
+          <button class="btn search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </form>
+      </div>
+
+      <div class="navbar-nav ms-auto">
+        <a class="nav-link" href="/listings/new">Wonderbnb your home</a>
+        <% if(!currUser){ %><a class="nav-link" href="/signup"><b>Sign Up</b></a><a class="nav-link" href="/login"><b>Login</b></a><% } %>
+        <% if(currUser){ %><a class="nav-link" href="/logout"><b>Logout</b></a><% } %>
+      </div>
     </div>
+  </div>
+</nav>
 
-    <div class="search-bar-item">
-      <label for="dates">Dates</label>
-      <input type="text" id="dates" name="dates" placeholder="Add dates">
-    </div>
-
-    <div class="search-bar-item guest-item">
-      <label for="guests">Guests</label>
-      <input type="text" id="guests" name="guests" placeholder="Add guests" readonly>
-    </div>
-
-    <button class="btn search-btn" type="submit">
-      <i class="fa-solid fa-magnifying-glass"></i>
-    </button>
-  </form>
-
-  <div id="guest-dropdown" class="guest-dropdown-menu">
+<div id="guest-dropdown" class="guest-dropdown-menu">
     <div class="guest-option">
       <span>Adults</span>
       <div class="guest-counter">
@@ -84,32 +78,4 @@
         <button type="button" class="counter-btn" data-type="children" data-action="increment">+</button>
       </div>
     </div>
-  </div>
-</div>
-
-
-
-
-
-      <div class="navbar-nav d-md-none my-2">
-        <div class="tax-toggle">
-          <div class="form-check form-switch form-check-reverse">
-            <input class="form-check-input tax-switch" type="checkbox" role="switch" id="switchCheckMobile">
-            <label class="form-check-label" for="switchCheckMobile">Display total after taxes</label>
-          </div>
-        </div>
-      </div>
-      
-      <div class="navbar-nav ms-auto">
-        <a class="nav-link" href="/listings/new">Wonderbnb your home</a>
-        <% if(!currUser){ %>
-          <a class="nav-link" href="/signup"><b>Sign Up</b></a>
-          <a class="nav-link" href="/login"><b>Login</b></a>
-        <% } %>
-        <% if(currUser){ %>
-          <a class="nav-link" href="/logout"><b>Logout</b></a>
-        <% } %>
-      </div>
     </div>
-  </div>
-</nav>

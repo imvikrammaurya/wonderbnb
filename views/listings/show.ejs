@@ -41,7 +41,7 @@
             </p>
           <% } %>
 
-          <p>&#8377;<%= listing.price.toLocaleString("en-IN") %></p>
+          <p>&#8377;<b><%= listing.price.toLocaleString("en-IN") %></b></p>
           <p><%= listing.location %></p>
           <p><%= listing.country %></p>
         </div>
@@ -92,13 +92,13 @@
           <div class="col-md-6 mb-3">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">@<%= review.author.username %></h5>
-                <p class="starability-result card-text" data-rating="<%= review.rating %>"></p>
-                <p class="card-text"><%= review.comment %></p>
+                <h5 class="card-title mt-2 px-2">@<%= review.author.username %></h5>
+                <p class="starability-result card-text " data-rating="<%= review.rating %>"></p>
+                <p class="card-text px-3"><%= review.comment %></p>
               </div>
               <% if(currUser && review.author._id.equals(currUser._id)) { %>
                 <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" class="mb-3 ms-3" method="POST">
-                  <button class="btn btn-sm btn-dark">Delete</button>
+                  <button class="btn btn-sm btn-dark mt-2">Delete</button>
                 </form>
               <% } %>
             </div>

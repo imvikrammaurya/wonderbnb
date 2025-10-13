@@ -270,6 +270,7 @@ body{
     cursor: pointer;
 }
 
+
 /* Guest Dropdown Menu Styles */
 .guest-dropdown-menu {
     display: none; /* Hidden by default */
@@ -413,3 +414,41 @@ body{
 .show-rating.rating-yellow { background-color: white; border-color: #f0ad4e; }
 .show-rating.rating-green { background-color: white; border-color: #5cb85c; }
 .show-rating.rating-dark-green { background-color: white; border-color: #4CAF50; }
+
+/* In style.css */
+
+/* --- Replace the old .search-bar-mobile-trigger rule with these --- */
+
+/* Mobile Search Trigger in Navbar */
+.search-bar-mobile-trigger {
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  padding: 0.4rem 0.5rem 0.4rem 1rem; /* Adjusted padding */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Added a subtle shadow */
+}
+
+.search-bar-mobile-text {
+  font-weight: 500;
+}
+
+.search-bar-mobile-icon {
+  background-color: #fe423d;
+  color: white;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Mobile Guest Options inside Modal */
+.mobile-guest-options {
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
