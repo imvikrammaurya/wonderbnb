@@ -210,7 +210,11 @@
     <script>
 document.addEventListener('DOMContentLoaded', () => {
 
-
+  // --- 1. CALCULATE THE MAX DATE ---
+    const today = new Date();
+    const maxDate = new Date(today);
+    maxDate.setFullYear(today.getFullYear() + 1);
+  
   // Filter Scroll Logic
     const filtersContainer = document.getElementById('filters');
     const scrollLeftButton = document.getElementById('scroll-left');
@@ -275,24 +279,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 const type = event.target.dataset.type;
                 const action = event.target.dataset.action;
                 if (type === 'adults') {
-                    adults = action === 'increment' ? adults + 1 : Math.max(1, adults - 1);
-                    adultsCountEl.textContent = adults;
+                    adults = action === 'increment' ? Math.min(4, adults + 1) : Math.max(1, adults - 1);
+            adultsCountEl.textContent = adults;
                 } else {
-                    children = action === 'increment' ? children + 1 : Math.max(0, children - 1);
-                    childrenCountEl.textContent = children;
+                    children = action === 'increment' ? Math.min(2, children + 1) : Math.max(0, children - 1);
+            childrenCountEl.textContent = children;
                 }
                 updateGuestInput();
             }
         });
     }
 
+    
+
     // Initialize for Desktop
     initGuestSelection('guests', 'guest-dropdown', 'adults-count', 'children-count');
-    new Litepicker({ element: document.getElementById('dates'), singleMode: false, format: 'DD MMM' });
+    new Litepicker({ element: document.getElementById('dates'), singleMode: false, format: 'DD MMM', maxDate: maxDate });
 
     // Initialize for Mobile (inside the modal)
     initGuestSelection('mobile-guests', 'mobile-guest-options', 'mobile-adults-count', 'mobile-children-count');
-    new Litepicker({ element: document.getElementById('mobile-dates'), singleMode: false, format: 'DD MMM' });
+    new Litepicker({ element: document.getElementById('mobile-dates'), singleMode: false, format: 'DD MMM', maxDate: maxDate });
 
     // Close desktop dropdown if clicking outside
     document.addEventListener('click', (event) => {
