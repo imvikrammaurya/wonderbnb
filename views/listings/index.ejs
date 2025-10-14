@@ -199,6 +199,9 @@
         let adults = startAdults;
         let children = startChildren;
         
+        if(adultsCountEl) adultsCountEl.textContent = adults;
+        if(childrenCountEl) childrenCountEl.textContent = children;
+
         function updateGuestInput() {
             let guestText = `${adults} Adult${adults > 1 ? 's' : ''}`;
             if (children > 0) guestText += `, ${children} Child${children > 1 ? 'ren' : ''}`;

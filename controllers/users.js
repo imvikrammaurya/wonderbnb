@@ -1,7 +1,7 @@
 const User = require("../models/user.js");
 
 
-module.exports.renderSignupForn = (req, res) => {
+module.exports.renderSignupForm = (req, res) => {
     res.render("users/signup.ejs", {searchParams: {}});
 };
 

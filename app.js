@@ -99,6 +99,11 @@ app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     res.locals.currUser = req.user;    //ye user ka sara deta store karwaye ga currUser nme
+    // Ensure `searchParams` is always defined for navbar include
+    // Controllers can still set `res.locals.searchParams` before rendering; only default when undefined
+    if (typeof res.locals.searchParams === 'undefined') {
+        res.locals.searchParams = req.query || {};
+    }
     next();
 })
 
