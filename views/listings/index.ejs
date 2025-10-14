@@ -70,206 +70,135 @@
   }
 </style>
     <!-- <h3>All listings</h3> -->
-     <div class="row align-items-center  ">
-
-  <div class="col-md-9 col-12">
-    <div class="position-relative">
-      <button class="btn filter-scroll-btn position-absolute top-50 start-0 translate-middle-y" id="scroll-left" style="z-index: 10;">
-        <i class="fa-solid fa-chevron-left"></i>
-      </button>
-
-      <div id="filters">
-        <a href="/listings?category=Trending" class="filter-link">
-        <div class="filter">
-          <div><i class="fa-solid fa-fire-flame-curved"></i></div>
-          <p>Trending</p>
-        </div></a>
-        
-        <a href="/listings?category=Rooms" class="filter-link">
-        <div class="filter">
-          <div><i class="fa-solid fa-bed"></i></div>
-          <p>Rooms</p>
-        </div></a>
-
-        <a href="/listings?category=Iconic Cities" class="filter-link">
-        <div class="filter">
-          <div><i class="fa-solid fa-city"></i></div>
-          <p>Iconic Cities</p>
-        </div></a>
-
-        <a href="/listings?category=Mountains" class="filter-link">
-        <div class="filter">
-          <div><i class="fa-solid fa-mountain-city"></i></div>
-          <p>Mountains</p>
-        </div></a>
-
-        <a href="/listings?category=Castles" class="filter-link">
-        <div class="filter">
-          <div><i class="fa-brands fa-fort-awesome"></i></div>
-          <p>Castles</p>
-        </div></a>
-
-        <a href="/listings?category=Amazing Pools" class="filter-link">
-        <div class="filter">
-          <div><i class="fa-solid fa-person-swimming"></i></div>
-          <p>Amazing Pools</p>
-        </div></a>
-
-        <a href="/listings?category=Arctic" class="filter-link">
-        <div class="filter">
-          <div><i class="fa-solid fa-snowflake"></i></div>
-          <p>Arctic</p>
-        </div></a>
-
-        <a href="/listings?category=Camping" class="filter-link">
-        <div class="filter">
-          <div><i class="fa-solid fa-campground"></i></div>
-          <p>Camping</p>
-        </div></a>
-
-        <a href="/listings?category=Dome" class="filter-link">
-        <div class="filter">
-          <div><i class="fa-solid fa-igloo"></i></div>
-          <p>Dome</p>
-        </div></a>
-
-        <a href="/listings?category=Boats" class="filter-link">
-        <div class="filter">
-          <div><i class="fa-solid fa-ship"></i></div>
-          <p>Boats</p>
-        </div></a>
-
-        <a href="/listings?category=Forms" class="filter-link">
-        <div class="filter">
-          <div><i class="fa-solid fa-cow"></i></div>
-          <p>Farms</p>
-        </div></a>
+     <div class="row align-items-center">
+    <div class="col-md-9 col-12">
+      <div class="position-relative">
+        <button class="btn filter-scroll-btn position-absolute top-50 start-0 translate-middle-y" id="scroll-left" style="z-index: 10;">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <div id="filters">
+          <a href="/listings?category=Trending" class="filter-link"><div class="filter"><div><i class="fa-solid fa-fire-flame-curved"></i></div><p>Trending</p></div></a>
+          <a href="/listings?category=Rooms" class="filter-link"><div class="filter"><div><i class="fa-solid fa-bed"></i></div><p>Rooms</p></div></a>
+          <a href="/listings?category=Iconic Cities" class="filter-link"><div class="filter"><div><i class="fa-solid fa-city"></i></div><p>Iconic Cities</p></div></a>
+          <a href="/listings?category=Mountains" class="filter-link"><div class="filter"><div><i class="fa-solid fa-mountain-city"></i></div><p>Mountains</p></div></a>
+          <a href="/listings?category=Castles" class="filter-link"><div class="filter"><div><i class="fa-brands fa-fort-awesome"></i></div><p>Castles</p></div></a>
+          <a href="/listings?category=Amazing Pools" class="filter-link"><div class="filter"><div><i class="fa-solid fa-person-swimming"></i></div><p>Amazing Pools</p></div></a>
+          <a href="/listings?category=Arctic" class="filter-link"><div class="filter"><div><i class="fa-solid fa-snowflake"></i></div><p>Arctic</p></div></a>
+          <a href="/listings?category=Camping" class="filter-link"><div class="filter"><div><i class="fa-solid fa-campground"></i></div><p>Camping</p></div></a>
+          <a href="/listings?category=Dome" class="filter-link"><div class="filter"><div><i class="fa-solid fa-igloo"></i></div><p>Dome</p></div></a>
+          <a href="/listings?category=Boats" class="filter-link"><div class="filter"><div><i class="fa-solid fa-ship"></i></div><p>Boats</p></div></a>
+          <a href="/listings?category=Farms" class="filter-link"><div class="filter"><div><i class="fa-solid fa-cow"></i></div><p>Farms</p></div></a>
+        </div>
+        <button class="btn filter-scroll-btn position-absolute top-50 end-0 translate-middle-y" id="scroll-right" style="z-index: 10;">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
       </div>
-
-      <button class="btn filter-scroll-btn position-absolute top-50 end-0 translate-middle-y" id="scroll-right" style="z-index: 10;">
-        <i class="fa-solid fa-chevron-right"></i>
-      </button>
+    </div>
+    <div class="col-md-3 col-12 d-none d-md-flex justify-content-md-end justify-content-center">
+      <div class="tax-toggle">
+        <div class="form-check form-switch form-check-reverse">
+          <input class="form-check-input tax-switch" type="checkbox" role="switch" id="switchCheckDesktop">
+          <label class="form-check-label" for="switchCheckDesktop">Display total after taxes</label>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="col-md-3 col-12 d-none d-md-flex justify-content-md-end justify-content-center">
-  <div class="tax-toggle">
-    <div class="form-check form-switch form-check-reverse">
-      <input class="form-check-input tax-switch" type="checkbox" role="switch" id="switchCheckDesktop">
-      <label class="form-check-label" for="switchCheckDesktop">Display total after taxes</label>
-    </div>
-  </div>
-</div>
-
-</div>
-    
-  </div>
-
- 
-</div>
-    <div class="container">
-<!-- <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 justify-content-center mt-3" > -->
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-  <% for( let listing of allListings){ %>
-    <div class="col">
-      <div class="card listing-card h-100">
-        <a href="/listings/<%= listing._id %>" class="listing-link">
-          <img src="<%= listing.image.url%>" class="card-img-top" alt="Listing image" style="height: 20rem;">
-           <div class="card-img-overlay"></div>
-          <div class="card-body d-flex flex-column">
-            <div class="card-title-wrapper">
-              <b><%= listing.title %></b>
-              <% if (listing.averageRating > 0) { %>
-                <%
-                  let ratingClass = "";
-                  if (listing.averageRating < 2) ratingClass = "rating-red";
-                  else if (listing.averageRating <= 3.5) ratingClass = "rating-yellow";
-                  else if (listing.averageRating <= 4.7) ratingClass = "rating-green";
-                  else ratingClass = "rating-dark-green";
-                %>
-                <div class="rating-badge  <%= ratingClass %>">
-                  <%= listing.averageRating.toFixed(1) %>
-                  <i class="fa-solid fa-star"></i>
+  <div class="container">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      <% for( let listing of allListings){ %>
+        <div class="col">
+          <div class="card listing-card h-100">
+            <a href="/listings/<%= listing._id %>" class="listing-link">
+              <img src="<%= listing.image.url%>" class="card-img-top" alt="Listing image" style="height: 20rem;">
+              <div class="card-img-overlay"></div>
+              <div class="card-body d-flex flex-column">
+                <div class="card-title-wrapper">
+                  <b><%= listing.title %></b>
+                  <% if (listing.averageRating > 0) { %>
+                    <%
+                      let ratingClass = "";
+                      if (listing.averageRating < 2) ratingClass = "rating-red";
+                      else if (listing.averageRating <= 3.5) ratingClass = "rating-yellow";
+                      else if (listing.averageRating <= 4.7) ratingClass = "rating-green";
+                      else ratingClass = "rating-dark-green";
+                    %>
+                    <div class="rating-badge <%= ratingClass %>">
+                      <%= listing.averageRating.toFixed(1) %>
+                      <i class="fa-solid fa-star"></i>
+                    </div>
+                  <% } %>
                 </div>
-              <% } %>
-            </div>
-
-            <p class="card-text" data-base-price="<%= listing.price %>">
-  &#8377;<%= (typeof listing.displayPrice !== 'undefined' ? listing.displayPrice : listing.price).toLocaleString("en-IN") %>
-  
-  <% if (typeof listing.displayPrice !== 'undefined') { %>
-      total
-  <% } else { %>
-      /night
-  <% } %>
-  <i class="tax-info">&nbsp; &nbsp;+18%gst</i>
-</p>
+                <p class="card-text" data-base-price="<%= listing.price %>">
+                  <b><span class="price-value">&#8377;<%= (typeof listing.displayPrice !== 'undefined' ? listing.displayPrice : listing.price).toLocaleString("en-IN") %></span></b>
+                  <% if (typeof listing.displayPrice !== 'undefined') { %>
+                    total
+                  <% } else { %>
+                    /night
+                  <% } %>
+                  <i class="tax-info">&nbsp; &nbsp;+18%gst</i>
+                </p>
+              </div>
+            </a>
           </div>
-        </a>
-      </div>
+        </div>
+      <% } %>
     </div>
-  <% } %>
-</div>
-  
-    </div>
-    </div>
+  </div>
 
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Get search params passed from the controller
+      const searchParams = <%- JSON.stringify(searchParams || {}) %>;
 
-    <script>
-document.addEventListener('DOMContentLoaded', () => {
+      // Parse initial guest counts from the search query
+      let initialAdults = 1;
+      let initialChildren = 0;
+      if (searchParams.guests) {
+          initialAdults = parseInt(searchParams.guests.match(/(\d+) Adult/)?.[1] || '1');
+          initialChildren = parseInt(searchParams.guests.match(/(\d+) Child/)?.[1] || '0');
+      }
 
-  // CALCULATE THE MAX DATE 
-    const today = new Date();
-    const maxDate = new Date(today);
-    maxDate.setFullYear(today.getFullYear() + 1);
-  
-  // Filter Scroll Logic
-    const filtersContainer = document.getElementById('filters');
-    const scrollLeftButton = document.getElementById('scroll-left');
-    const scrollRightButton = document.getElementById('scroll-right');
-
-    if (filtersContainer && scrollLeftButton && scrollRightButton) {
-        scrollLeftButton.addEventListener('click', () => {
-            filtersContainer.scrollBy({ left: -300, behavior: 'smooth' });
-        });
-
-        scrollRightButton.addEventListener('click', () => {
-            filtersContainer.scrollBy({ left: 300, behavior: 'smooth' });
-        });
+       // ---  PARSE INITIAL DATES FROM SEARCH QUERY (NEW) ---
+      let initialStartDate = null;
+    let initialEndDate = null;
+    if (searchParams.dates) {
+        const [startStr, endStr] = searchParams.dates.split(' - ');
+        if(startStr) initialStartDate = new Date(startStr);
+        if(endStr) initialEndDate = new Date(endStr);
     }
 
-    // A function to initialize guest selection logic
-    function initGuestSelection(guestInputId, guestDropdownId, adultsCountId, childrenCountId) {
+      // CALCULATE THE MAX DATE 
+      const today = new Date();
+      const maxDate = new Date(today);
+      maxDate.setFullYear(today.getFullYear() + 1);
+  
+      // Filter Scroll Logic
+      const filtersContainer = document.getElementById('filters');
+      const scrollLeftButton = document.getElementById('scroll-left');
+      const scrollRightButton = document.getElementById('scroll-right');
+      if (filtersContainer && scrollLeftButton && scrollRightButton) {
+          scrollLeftButton.addEventListener('click', () => filtersContainer.scrollBy({ left: -300, behavior: 'smooth' }));
+          scrollRightButton.addEventListener('click', () => filtersContainer.scrollBy({ left: 300, behavior: 'smooth' }));
+      }
+
+      // Guest selection logic
+      function initGuestSelection(guestInputId, guestDropdownId, adultsCountId, childrenCountId, startAdults, startChildren) {
         const guestInput = document.getElementById(guestInputId);
         const guestDropdown = document.getElementById(guestDropdownId);
         if (!guestInput || !guestDropdown) return;
 
-        // Populate dropdown if it's for mobile
         if (guestDropdownId === 'mobile-guest-options') {
             guestDropdown.innerHTML = `
-                <div class="guest-option">
-                    <span>Adults</span>
-                    <div class="guest-counter">
-                        <button type="button" class="counter-btn" data-type="adults" data-action="decrement">-</button>
-                        <span id="${adultsCountId}">1</span>
-                        <button type="button" class="counter-btn" data-type="adults" data-action="increment">+</button>
-                    </div>
-                </div>
-                <div class="guest-option">
-                    <span>Children</span>
-                    <div class="guest-counter">
-                        <button type="button" class="counter-btn" data-type="children" data-action="decrement">-</button>
-                        <span id="${childrenCountId}">0</span>
-                        <button type="button" class="counter-btn" data-type="children" data-action="increment">+</button>
-                    </div>
-                </div>`;
+                <div class="guest-option"><span>Adults</span><div class="guest-counter"><button type="button" class="counter-btn" data-type="adults" data-action="decrement">-</button><span id="${adultsCountId}">${startAdults}</span><button type="button" class="counter-btn" data-type="adults" data-action="increment">+</button></div></div>
+                <div class="guest-option"><span>Children</span><div class="guest-counter"><button type="button" class="counter-btn" data-type="children" data-action="decrement">-</button><span id="${childrenCountId}">${startChildren}</span><button type="button" class="counter-btn" data-type="children" data-action="increment">+</button></div></div>`;
         }
 
         const adultsCountEl = document.getElementById(adultsCountId);
         const childrenCountEl = document.getElementById(childrenCountId);
-        let adults = 1;
-        let children = 0;
-
+        let adults = startAdults;
+        let children = startChildren;
+        
         function updateGuestInput() {
             let guestText = `${adults} Adult${adults > 1 ? 's' : ''}`;
             if (children > 0) guestText += `, ${children} Child${children > 1 ? 'ren' : ''}`;
@@ -288,67 +217,67 @@ document.addEventListener('DOMContentLoaded', () => {
                 const action = event.target.dataset.action;
                 if (type === 'adults') {
                     adults = action === 'increment' ? Math.min(4, adults + 1) : Math.max(1, adults - 1);
-            adultsCountEl.textContent = adults;
+                    adultsCountEl.textContent = adults;
                 } else {
                     children = action === 'increment' ? Math.min(2, children + 1) : Math.max(0, children - 1);
-            childrenCountEl.textContent = children;
+                    childrenCountEl.textContent = children;
                 }
                 updateGuestInput();
             }
         });
-    }
+      }
 
-    
+      // Initialize for Desktop
+      initGuestSelection('guests', 'guest-dropdown', 'adults-count', 'children-count', initialAdults, initialChildren);
+      new Litepicker({ element: document.getElementById('dates'), singleMode: false, format: 'DD MMM', maxDate: maxDate, startDate: initialStartDate, endDate: initialEndDate });
 
-    // Initialize for Desktop
-    initGuestSelection('guests', 'guest-dropdown', 'adults-count', 'children-count');
-    new Litepicker({ element: document.getElementById('dates'), singleMode: false, format: 'DD MMM', maxDate: maxDate });
-
-    // Initialize for Mobile (inside the modal)
-    initGuestSelection('mobile-guests', 'mobile-guest-options', 'mobile-adults-count', 'mobile-children-count');
-    new Litepicker({ element: document.getElementById('mobile-dates'), singleMode: false, format: 'DD MMM', maxDate: maxDate });
-
-    // Close desktop dropdown if clicking outside
-    document.addEventListener('click', (event) => {
+      // Initialize for Mobile
+      initGuestSelection('mobile-guests', 'mobile-guest-options', 'mobile-adults-count', 'mobile-children-count', initialAdults, initialChildren);
+      new Litepicker({ element: document.getElementById('mobile-dates'), singleMode: false, format: 'DD MMM', maxDate: maxDate, startDate: initialStartDate, endDate: initialEndDate });
+      
+      
+      document.addEventListener('click', (event) => {
         const guestInput = document.getElementById('guests');
         const guestDropdown = document.getElementById('guest-dropdown');
         if (guestDropdown && !guestInput.contains(event.target) && !guestDropdown.contains(event.target)) {
             guestDropdown.style.display = 'none';
         }
-    });
+      });
 
-    // Tax Switch Logic
-    const taxSwitches = document.querySelectorAll(".tax-switch");
-    const taxInfos = document.getElementsByClassName("tax-info");
-    taxSwitches.forEach((taxSwitch) => {
+      const taxSwitches = document.querySelectorAll(".tax-switch");
+      const taxInfos = document.getElementsByClassName("tax-info");
+      taxSwitches.forEach((taxSwitch) => {
         taxSwitch.addEventListener("click", () => {
             for (let info of taxInfos) {
                 info.style.display = taxSwitch.checked ? "inline" : "none";
             }
         });
+      });
+
+      // --- SIMPLIFIED AND FIXED HOMEPAGE PRICING LOGIC ---
+      const isHomepage = !new URLSearchParams(window.location.search).has('location');
+      if (isHomepage) {
+          const dayOfWeek = today.getDay();
+          let multiplier = 1.0;
+
+          if (dayOfWeek === 6 || dayOfWeek === 0) { // Sat or Sun
+              multiplier = 1.4;
+          } else if (dayOfWeek === 3 || dayOfWeek === 5) { // Wed or Fri
+              multiplier = 1.2;
+          }
+
+          if (multiplier > 1.0) {
+              document.querySelectorAll('[data-base-price]').forEach(el => {
+                  const basePrice = parseFloat(el.dataset.basePrice);
+                  const newPrice = Math.round(basePrice * multiplier);
+                  const priceValueElement = el.querySelector('.price-value');
+                  if (priceValueElement) {
+                      priceValueElement.textContent = `₹${newPrice.toLocaleString('en-IN')}`;
+                  }
+              });
+          }
+      }
     });
-
-    const isHomepage = !new URLSearchParams(window.location.search).has('location');
-
-        if (isHomepage) {
-            const today = new Date();
-            const dayOfWeek = today.getDay();
-            let multiplier = 1.0;
-
-            if (dayOfWeek === 6 || dayOfWeek === 0) { // Sat or Sun
-                multiplier = 1.4;
-            } else if (dayOfWeek === 3 || dayOfWeek === 5) { // Wed or Fri
-                multiplier = 1.2;
-            }
-
-            document.querySelectorAll('[data-base-price]').forEach(el => {
-                const basePrice = parseFloat(el.dataset.basePrice);
-                const newPrice = Math.round(basePrice * multiplier);
-                const priceText = `₹${newPrice.toLocaleString('en-IN')} /night`;
-                el.innerHTML = priceText + el.querySelector('.tax-info').outerHTML;
-            });
-        }
-});
-</script>
+  </script>
 </body>
 

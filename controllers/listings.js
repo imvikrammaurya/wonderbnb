@@ -1,24 +1,32 @@
 const Listing = require("../models/listing");
 
-
+// COMBINED AND CORRECTED INDEX FUNCTION
 module.exports.index = async (req, res) => {
-  const allListings = await Listing.find({});
-   res.render("listings/index.ejs", {allListings});
-}; 
+    const { category } = req.query; // Get category from query if it exists
+    const filter = category ? { category: category } : {}; // Create a filter if a category is provided
 
-module.exports.renderNewForm = (req, res) => {
-    res.render("listings/new.ejs");
+    const allListings = await Listing.find(filter); // Apply the filter
+
+    // Always pass an empty searchParams for the homepage/category pages
+    res.render("listings/index.ejs", {
+        allListings,
+        category,
+        searchParams: {}
+    });
 };
 
-module.exports.showListing = async(req, res)  =>{
+module.exports.renderNewForm = (req, res) => {
+    res.render("listings/new.ejs", {searchParams: {}});
+};
+
+module.exports.showListing = async(req, res) => {
     let {id} = req.params;
     const listing = await Listing.findById(id).populate({path: "reviews", populate : {path: "author",},}).populate("owner");
     if(!listing){
         req.flash('error', `Listing you requested for does not exist!`);
-        res.redirect("/listings");
-        return;
+        return res.redirect("/listings");
     }
-    res.render("listings/show.ejs", {listing});
+    res.render("listings/show.ejs", {listing, searchParams: {}});
 };
 
 module.exports.createListing = async (req, res, next) => {
@@ -46,7 +54,7 @@ module.exports.renderEditForm = async (req, res) => {
 
     let orginalImageUrl = listing.image.url;
     orginalImageUrl = orginalImageUrl.replace("/upload", "/upload/h_300/w_250/");
-    res.render("listings/edit.ejs", {listing, orginalImageUrl});
+    res.render("listings/edit.ejs", {listing, orginalImageUrl , searchParams: {}});
 };
 
 module.exports.updateListing = async (req, res) => {
@@ -60,7 +68,7 @@ module.exports.updateListing = async (req, res) => {
     await listing.save();
     }
     
-     req.flash('success', `Successfully Updated Listing`);
+    req.flash('success', `Successfully Updated Listing`);
     res.redirect(`/listings/${id}`);
 };
 
@@ -68,26 +76,9 @@ module.exports.destroyListing = async(req, res) => {
     let {id} = req.params;
     let deletedListing = await Listing.findByIdAndDelete(id);
     console.log(deletedListing);
-     req.flash('success', `Successfully deleted`);
+    req.flash('success', `Successfully deleted`);
     res.redirect("/listings");
 };
-
-// In controllers/listings.js
-
-module.exports.index = async (req, res) => {
-  const { category } = req.query; // Get category from query
-  const filter = category ? { category } : {}; // Create filter object
-
-  const allListings = await Listing.find(filter); // Apply filter
-
-  res.render("listings/index.ejs", { allListings, category });
-};
-
-
-
-
-
-
 
 module.exports.searchListings = async (req, res) => {
     // 1. Get search parameters from the URL query
@@ -105,10 +96,10 @@ module.exports.searchListings = async (req, res) => {
 
     // 3. Parse dates and guests, with defaults
     const [startDateStr, endDateStr] = dates ? dates.split(' - ') : [null, null];
-    const startDate = startDateStr ? new Date(startDateStr) : new Date();
-    const endDate = endDateStr ? new Date(endDateStr) : new Date(startDate);
+    const startDate = startDateStr ? new Date(startDateStr.trim()) : new Date();
+    const endDate = endDateStr ? new Date(endDateStr.trim()) : new Date(startDate);
     if (!endDateStr) {
-        endDate.setDate(startDate.getDate() + 1); // Default to one night if only start date
+        endDate.setDate(startDate.getDate() + 1); // Default to one night
     }
 
     const numAdults = guests ? parseInt(guests.match(/(\d+) Adult/)?.[1] || '1') : 1;
@@ -116,9 +107,12 @@ module.exports.searchListings = async (req, res) => {
 
     // 4. Calculate the dynamic price for each listing
     const updatedListings = listings.map(listing => {
-        let totalGuestPrice = listing.price * (1 + 0.10 * numAdults);
+        // --- THIS IS THE ONLY LINE THAT HAS CHANGED ---
+        // It now correctly calculates price based on adults after the first one.
+        let totalGuestPrice = listing.price * (1 + (0.10 * (numAdults - 1)));
+        
         if (numChildren > 0) {
-            totalGuestPrice *= (1 + 0.05 * numChildren);
+            totalGuestPrice *= (1 + (0.05 * numChildren));
         }
 
         let finalPrice = 0;
@@ -142,10 +136,8 @@ module.exports.searchListings = async (req, res) => {
             currentDate.setDate(currentDate.getDate() + 1);
         }
         
-        // Return a new object to avoid modifying the original
-        // We use ._doc to get the raw data and add our new property
         return { ...listing._doc, displayPrice: Math.round(finalPrice) };
     });
 
-    res.render("listings/index.ejs", { allListings: updatedListings, category: "Search Results" });
+    res.render("listings/index.ejs", { allListings: updatedListings, category: "Search Results", searchParams: { location, dates, guests } });
 };
