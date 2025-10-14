@@ -107,7 +107,7 @@ body{
 .listing-link{
     text-decoration: none;
     color: #222222;
-    display: flex;         
+    display: block;         
     flex-direction: column;
     height: 100%; 
 }

@@ -17,10 +17,7 @@ router.route("/")
 //New Route 
 router.get("/new", isLoggedIn, listingController.renderNewForm);
 
-router.route("/:id")
-.get( wrapAsync (listingController.showListing))
-.put( isLoggedIn, isOwner, upload.single('image'), validateListing, wrapAsync(listingController.updateListing))
-.delete( isLoggedIn, isOwner, wrapAsync (listingController.destroyListing))
+
 
 
 //Index route - we write it in router.route ("/")
@@ -33,10 +30,22 @@ router.route("/:id")
 //Create Route - we write it in router.route ("/")
 
 
+
+
+
+//New Route
+router.get("/new", isLoggedIn, listingController.renderNewForm);
+
+// NEW SEARCH ROUTE
+router.get("/search", wrapAsync(listingController.searchListings));
+
+router.route("/:id")
+.get( wrapAsync (listingController.showListing))
+.put( isLoggedIn, isOwner, upload.single('image'), validateListing, wrapAsync(listingController.updateListing))
+.delete( isLoggedIn, isOwner, wrapAsync (listingController.destroyListing))
+
 //Edit Route
 router.get("/:id/edit", isLoggedIn, isOwner, wrapAsync (listingController.renderEditForm));
-
-
 
 //Update Route - we write it in router.route ("/:id")
 

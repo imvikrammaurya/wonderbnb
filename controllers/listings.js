@@ -82,3 +82,70 @@ module.exports.index = async (req, res) => {
 
   res.render("listings/index.ejs", { allListings, category });
 };
+
+
+
+
+
+
+
+module.exports.searchListings = async (req, res) => {
+    // 1. Get search parameters from the URL query
+    const { location, dates, guests } = req.query;
+
+    // 2. Build the database query for location
+    const locationQuery = location ? {
+        $or: [
+            { country: new RegExp(location, 'i') },
+            { location: new RegExp(location, 'i') }
+        ]
+    } : {};
+
+    const listings = await Listing.find(locationQuery);
+
+    // 3. Parse dates and guests, with defaults
+    const [startDateStr, endDateStr] = dates ? dates.split(' - ') : [null, null];
+    const startDate = startDateStr ? new Date(startDateStr) : new Date();
+    const endDate = endDateStr ? new Date(endDateStr) : new Date(startDate);
+    if (!endDateStr) {
+        endDate.setDate(startDate.getDate() + 1); // Default to one night if only start date
+    }
+
+    const numAdults = guests ? parseInt(guests.match(/(\d+) Adult/)?.[1] || '1') : 1;
+    const numChildren = guests ? parseInt(guests.match(/(\d+) Child/)?.[1] || '0') : 0;
+
+    // 4. Calculate the dynamic price for each listing
+    const updatedListings = listings.map(listing => {
+        let totalGuestPrice = listing.price * (1 + 0.10 * numAdults);
+        if (numChildren > 0) {
+            totalGuestPrice *= (1 + 0.05 * numChildren);
+        }
+
+        let finalPrice = 0;
+        let currentDate = new Date(startDate);
+
+        while (currentDate < endDate) {
+            const dayOfWeek = currentDate.getDay(); // 0=Sun, 1=Mon, ..., 6=Sat
+            let dailyPrice = totalGuestPrice;
+
+            switch (dayOfWeek) {
+                case 6: // Saturday
+                case 0: // Sunday
+                    dailyPrice *= 1.40;
+                    break;
+                case 3: // Wednesday
+                case 5: // Friday
+                    dailyPrice *= 1.20;
+                    break;
+            }
+            finalPrice += dailyPrice;
+            currentDate.setDate(currentDate.getDate() + 1);
+        }
+        
+        // Return a new object to avoid modifying the original
+        // We use ._doc to get the raw data and add our new property
+        return { ...listing._doc, displayPrice: Math.round(finalPrice) };
+    });
+
+    res.render("listings/index.ejs", { allListings: updatedListings, category: "Search Results" });
+};

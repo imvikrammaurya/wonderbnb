@@ -175,7 +175,7 @@
       <div class="card listing-card h-100">
         <a href="/listings/<%= listing._id %>" class="listing-link">
           <img src="<%= listing.image.url%>" class="card-img-top" alt="Listing image" style="height: 20rem;">
-          
+           <div class="card-img-overlay"></div>
           <div class="card-body d-flex flex-column">
             <div class="card-title-wrapper">
               <b><%= listing.title %></b>
@@ -194,10 +194,16 @@
               <% } %>
             </div>
 
-            <p class="card-text ">
-              &#8377;<%= listing.price.toLocaleString("en-IN") %> /night
-              <i class="tax-info">&nbsp; &nbsp;+18%gst</i>
-            </p>
+            <p class="card-text" data-base-price="<%= listing.price %>">
+  &#8377;<%= (typeof listing.displayPrice !== 'undefined' ? listing.displayPrice : listing.price).toLocaleString("en-IN") %>
+  
+  <% if (typeof listing.displayPrice !== 'undefined') { %>
+      total
+  <% } else { %>
+      /night
+  <% } %>
+  <i class="tax-info">&nbsp; &nbsp;+18%gst</i>
+</p>
           </div>
         </a>
       </div>
@@ -207,10 +213,12 @@
   
     </div>
     </div>
+
+
     <script>
 document.addEventListener('DOMContentLoaded', () => {
 
-  // --- 1. CALCULATE THE MAX DATE ---
+  // CALCULATE THE MAX DATE 
     const today = new Date();
     const maxDate = new Date(today);
     maxDate.setFullYear(today.getFullYear() + 1);
@@ -319,6 +327,27 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    const isHomepage = !new URLSearchParams(window.location.search).has('location');
+
+        if (isHomepage) {
+            const today = new Date();
+            const dayOfWeek = today.getDay();
+            let multiplier = 1.0;
+
+            if (dayOfWeek === 6 || dayOfWeek === 0) { // Sat or Sun
+                multiplier = 1.4;
+            } else if (dayOfWeek === 3 || dayOfWeek === 5) { // Wed or Fri
+                multiplier = 1.2;
+            }
+
+            document.querySelectorAll('[data-base-price]').forEach(el => {
+                const basePrice = parseFloat(el.dataset.basePrice);
+                const newPrice = Math.round(basePrice * multiplier);
+                const priceText = `₹${newPrice.toLocaleString('en-IN')} /night`;
+                el.innerHTML = priceText + el.querySelector('.tax-info').outerHTML;
+            });
+        }
 });
 </script>
 </body>
