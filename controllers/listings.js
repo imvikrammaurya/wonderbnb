@@ -22,11 +22,23 @@ module.exports.renderNewForm = (req, res) => {
 module.exports.showListing = async(req, res) => {
     let {id} = req.params;
     const listing = await Listing.findById(id).populate({path: "reviews", populate : {path: "author",},}).populate("owner");
+    
     if(!listing){
         req.flash('error', `Listing you requested for does not exist!`);
         return res.redirect("/listings");
     }
-    res.render("listings/show.ejs", {listing, searchParams: {}});
+
+    // Get price from query, or default to the listing's base price
+    const displayPrice = req.query.price || listing.price;
+    // Check if the price is a total (from search) or a nightly rate
+    const isTotalPrice = !!req.query.price && req.query.price !== String(listing.price);
+
+    res.render("listings/show.ejs", {
+        listing, 
+        displayPrice, 
+        isTotalPrice, 
+        searchParams: {}
+    });
 };
 
 module.exports.createListing = async (req, res, next) => {

@@ -41,7 +41,14 @@
             </p>
           <% } %>
 
-          <p>&#8377;<b><%= listing.price.toLocaleString("en-IN") %></b></p>
+          <p class="card-text"><b>
+  &#8377;<%= Number(displayPrice).toLocaleString("en-IN") %>
+  <% if (isTotalPrice) { %>
+      total
+  <% } else { %>
+      /night
+  <% } %></b>
+</p>
           <p><%= listing.location %></p>
           <p><%= listing.country %></p>
         </div>
