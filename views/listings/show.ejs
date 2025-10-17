@@ -114,4 +114,89 @@
       </div>
     </div>
   </div>
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+    // --- Guest Selection Logic (Copied from index.ejs) ---
+    function initGuestSelection(guestInputId, guestDropdownId, adultsCountId, childrenCountId, startAdults = 1, startChildren = 0) {
+        const guestInput = document.getElementById(guestInputId);
+        const guestDropdown = document.getElementById(guestDropdownId);
+        if (!guestInput || !guestDropdown) return;
+
+        const adultsCountEl = document.getElementById(adultsCountId);
+        const childrenCountEl = document.getElementById(childrenCountId);
+        let adults = startAdults;
+        let children = startChildren;
+        
+        if(adultsCountEl) adultsCountEl.textContent = adults;
+        if(childrenCountEl) childrenCountEl.textContent = children;
+
+        function updateGuestInput() {
+            let guestText = `${adults} Adult${adults > 1 ? 's' : ''}`;
+            if (children > 0) guestText += `, ${children} Child${children > 1 ? 'ren' : ''}`;
+            guestInput.value = guestText;
+        }
+        updateGuestInput();
+
+        guestInput.addEventListener('click', (event) => {
+            event.stopPropagation();
+            guestDropdown.style.display = guestDropdown.style.display === 'block' ? 'none' : 'block';
+        });
+
+        guestDropdown.addEventListener('click', (event) => {
+            if (event.target.classList.contains('counter-btn')) {
+                const type = event.target.dataset.type;
+                const action = event.target.dataset.action;
+                if (type === 'adults') {
+                    adults = action === 'increment' ? Math.min(4, adults + 1) : Math.max(1, adults - 1);
+                    adultsCountEl.textContent = adults;
+                } else {
+                    children = action === 'increment' ? Math.min(2, children + 1) : Math.max(0, children - 1);
+                    childrenCountEl.textContent = children;
+                }
+                updateGuestInput();
+            }
+        });
+    }
+
+    // Initialize guest selection for the desktop navbar
+    initGuestSelection('guests', 'guest-dropdown', 'adults-count', 'children-count');
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (event) => {
+        const guestInput = document.getElementById('guests');
+        const guestDropdown = document.getElementById('guest-dropdown');
+        if (guestDropdown && !guestInput.contains(event.target) && !guestDropdown.contains(event.target)) {
+            guestDropdown.style.display = 'none';
+        }
+    });
+
+    // --- Dynamic Price Calculation Logic (Already on your show page) ---
+    const datesInput = document.getElementById('dates');
+    const guestsInput = document.getElementById('guests'); // This now works
+    const priceElement = document.getElementById('listing-price');
+    const listingId = "<%= listing._id %>";
+
+    async function updatePrice() {
+        // ... (your existing updatePrice function) ...
+    }
+
+    // Initialize the date picker
+    const datePicker = new Litepicker({ 
+        element: datesInput,
+        singleMode: false,
+        format: 'DD MMM',
+        onSelect: updatePrice 
+    });
+
+    // Make the guest dropdown trigger the price update
+    const guestDropdown = document.getElementById('guest-dropdown');
+    if (guestDropdown) {
+        guestDropdown.addEventListener('click', (event) => {
+            if (event.target.classList.contains('counter-btn')) {
+                setTimeout(updatePrice, 50);
+            }
+        });
+    }
+});
+</script>
 </body>
