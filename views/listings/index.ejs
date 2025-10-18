@@ -270,14 +270,29 @@
           }
 
           if (multiplier > 1.0) {
-              document.querySelectorAll('[data-base-price]').forEach(el => {
-                  const basePrice = parseFloat(el.dataset.basePrice);
-                  const newPrice = Math.round(basePrice * multiplier);
-                  const priceValueElement = el.querySelector('.price-value');
-                  if (priceValueElement) {
-                      priceValueElement.textContent = `₹${newPrice.toLocaleString('en-IN')}`;
-                  }
-              });
+              document.querySelectorAll('[data-base-price]').forEach(priceParagraph => {
+    const basePrice = parseFloat(priceParagraph.dataset.basePrice);
+    const newPrice = Math.round(basePrice * multiplier);
+    
+    // Update the displayed text (as before)
+    const priceValueElement = priceParagraph.querySelector('.price-value');
+    if (priceValueElement) {
+        priceValueElement.textContent = `₹${newPrice.toLocaleString('en-IN')}`;
+    }
+
+    // --- ADD THIS PART ---
+    // Find the parent link element
+    const linkElement = priceParagraph.closest('.listing-link'); 
+    if (linkElement) {
+        // Get the current URL
+        const currentUrl = new URL(linkElement.href);
+        // Update the 'price' query parameter
+        currentUrl.searchParams.set('price', newPrice);
+        // Set the link's href to the new URL
+        linkElement.href = currentUrl.toString();
+    }
+    // --- END ---
+});
           }
       }
     });
