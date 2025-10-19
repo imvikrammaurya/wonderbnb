@@ -55,12 +55,16 @@
       </div>
 
       <% if(currUser && listing.owner._id.equals(currUser._id)) { %>
-        <div class="btns mt-3">
-          <a href="/listings/<%= listing._id %>/edit" class="btn btn-danger edit-btn me-2">Edit</a>
-          <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST" style="display:inline;">
-            <button class="btn btn-dark">Delete</button>
-          </form>
-        </div>
+        <div class="btns mt-3 d-flex align-items-center">
+  <a href="/listings/<%= listing._id %>/edit" class="btn btn-danger edit-btn me-2">Edit</a>
+  <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST" class="me-2">
+    <button class="btn btn-dark">Delete</button>
+  </form>
+  
+  <a href="/listings/<%= listing._id %>/payment?price=<%= displayPrice %>" class="btn btn-danger add-btn">
+    Review & Book
+  </a>
+</div>
       <% } %> 
 
       <div class="mt-3 mb-3"><br><hr>

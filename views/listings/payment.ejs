@@ -1,0 +1,109 @@
+<% layout('layouts/boilerplate.ejs') -%>
+
+<div class="row mt-3">
+    <div class="col-md-8 offset-md-2">
+        <h2>Confirm and Pay</h2>
+        <hr>
+
+        <div class="row">
+            <div class="col-md-7 mb-4">
+                <h4>Your Booking Details</h4>
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-4">
+                            <img src="<%= listing.image.url %>" class="img-fluid rounded-start" alt="Listing Image" style="height: 120px; object-fit: cover;">
+                        </div>
+                        <div class="col-8">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= listing.title %></h5>
+                                <p class="card-text text-muted"><%= listing.location %>, <%= listing.country %></p>
+                                <% if (listing.averageRating > 0) { %>
+                                    <p class="card-text">
+                                        <i class="fa-solid fa-star"></i> <%= listing.averageRating.toFixed(1) %>
+                                        <span class="text-muted">(<%= listing.reviews.length %> reviews)</span>
+                                    </p>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+                <h4>Price Breakdown</h4>
+                <%
+                   const basePrice = parseFloat(price);
+                   const taxRate = 0.18; // Assuming 18% GST
+                   const taxAmount = basePrice * taxRate;
+                   const totalPrice = basePrice + taxAmount;
+                %>
+                <div class="d-flex justify-content-between">
+                    <span>Booking Price</span>
+                    <span>₹<%= basePrice.toLocaleString('en-IN') %></span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span>Taxes (GST @18%)</span>
+                    <span>₹<%= taxAmount.toLocaleString('en-IN') %></span>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between fw-bold">
+                    <span>Total Amount</span>
+                    <span>₹<%= totalPrice.toLocaleString('en-IN') %></span>
+                </div>
+
+                <hr>
+
+                <h4>Have a Coupon?</h4>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Enter coupon code" id="coupon-code">
+                    <button class="btn btn-outline-secondary" type="button" id="apply-coupon-btn">Apply</button>
+                </div>
+            </div>
+
+            <div class="col-md-5">
+                <h4>Choose Payment Method</h4>
+                <div class="list-group">
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="radio" name="paymentMethod" value="card" checked>
+                        Credit/Debit Card
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="radio" name="paymentMethod" value="upi">
+                        UPI (Paytm, Google Pay, etc.)
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="radio" name="paymentMethod" value="cash">
+                        Pay at Hotel (Cash)
+                    </label>
+                </div>
+
+                <div id="card-details" class="mt-3 border p-3 rounded">
+                    <h6>Enter Card Details</h6>
+                    <div class="mb-2">
+                        <input type="text" class="form-control" placeholder="Card Number">
+                    </div>
+                    <div class="row">
+                        <div class="col-7"><input type="text" class="form-control" placeholder="MM / YY"></div>
+                        <div class="col-5"><input type="text" class="form-control" placeholder="CVV"></div>
+                    </div>
+                </div>
+
+                <div id="upi-details" class="mt-3 border p-3 rounded" style="display: none;">
+                     <h6>Enter UPI ID</h6>
+                     <input type="text" class="form-control" placeholder="yourname@bank">
+                </div>
+
+                <button class="btn btn-danger add-btn w-100 mt-4">Confirm Booking</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            document.getElementById('card-details').style.display = this.value === 'card' ? 'block' : 'none';
+            document.getElementById('upi-details').style.display = this.value === 'upi' ? 'block' : 'none';
+        });
+    });
+</script>

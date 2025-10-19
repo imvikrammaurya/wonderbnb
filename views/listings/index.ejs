@@ -148,19 +148,19 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Get search params passed from the controller
-      const searchParams = <%- JSON.stringify(searchParams || {}) %>;
+    // Get search params passed from the controller
+    const searchParams = <%- JSON.stringify(searchParams || {}) %>;
 
-      // Parse initial guest counts from the search query
-      let initialAdults = 1;
-      let initialChildren = 0;
-      if (searchParams.guests) {
-          initialAdults = parseInt(searchParams.guests.match(/(\d+) Adult/)?.[1] || '1');
-          initialChildren = parseInt(searchParams.guests.match(/(\d+) Child/)?.[1] || '0');
-      }
+    // Parse initial guest counts from the search query
+    let initialAdults = 1;
+    let initialChildren = 0;
+    if (searchParams.guests) {
+        initialAdults = parseInt(searchParams.guests.match(/(\d+) Adult/)?.[1] || '1');
+        initialChildren = parseInt(searchParams.guests.match(/(\d+) Child/)?.[1] || '0');
+    }
 
-       // ---  PARSE INITIAL DATES FROM SEARCH QUERY (NEW) ---
-      let initialStartDate = null;
+    // Parse initial dates from search query
+    let initialStartDate = null;
     let initialEndDate = null;
     if (searchParams.dates) {
         const [startStr, endStr] = searchParams.dates.split(' - ');
@@ -168,19 +168,19 @@
         if(endStr) initialEndDate = new Date(endStr);
     }
 
-      // CALCULATE THE MAX DATE 
-      const today = new Date();
-      const maxDate = new Date(today);
-      maxDate.setFullYear(today.getFullYear() + 1);
-  
-      // Filter Scroll Logic
-      const filtersContainer = document.getElementById('filters');
-      const scrollLeftButton = document.getElementById('scroll-left');
-      const scrollRightButton = document.getElementById('scroll-right');
-      if (filtersContainer && scrollLeftButton && scrollRightButton) {
-          scrollLeftButton.addEventListener('click', () => filtersContainer.scrollBy({ left: -300, behavior: 'smooth' }));
-          scrollRightButton.addEventListener('click', () => filtersContainer.scrollBy({ left: 300, behavior: 'smooth' }));
-      }
+    // CALCULATE THE MAX DATE 
+    const today = new Date();
+    const maxDate = new Date(today);
+    maxDate.setFullYear(today.getFullYear() + 1);
+ 
+    // Filter Scroll Logic
+    const filtersContainer = document.getElementById('filters');
+    const scrollLeftButton = document.getElementById('scroll-left');
+    const scrollRightButton = document.getElementById('scroll-right');
+    if (filtersContainer && scrollLeftButton && scrollRightButton) {
+        scrollLeftButton.addEventListener('click', () => filtersContainer.scrollBy({ left: -300, behavior: 'smooth' }));
+        scrollRightButton.addEventListener('click', () => filtersContainer.scrollBy({ left: 300, behavior: 'smooth' }));
+    }
 
       // Guest selection logic
       function initGuestSelection(guestInputId, guestDropdownId, adultsCountId, childrenCountId, startAdults, startChildren) {
@@ -230,23 +230,52 @@
         });
       }
 
-      // Initialize for Desktop
-      initGuestSelection('guests', 'guest-dropdown', 'adults-count', 'children-count', initialAdults, initialChildren);
-      new Litepicker({ element: document.getElementById('dates'), singleMode: false, format: 'DD MMM', maxDate: maxDate, startDate: initialStartDate, endDate: initialEndDate });
+      // Initialize for Desktop (ONLY IF ELEMENTS EXIST)
+    const desktopDatesInput = document.getElementById('dates');
+    const desktopGuestsInput = document.getElementById('guests');
+    if (desktopDatesInput) {
+        new Litepicker({ 
+            element: desktopDatesInput, 
+            singleMode: false, 
+            format: 'DD MMM', 
+            maxDate: maxDate, 
+            startDate: initialStartDate, 
+            endDate: initialEndDate 
+        });
+    }
+    if (desktopGuestsInput) {
+        initGuestSelection('guests', 'guest-dropdown', 'adults-count', 'children-count', initialAdults, initialChildren);
+        
+        // Add the close dropdown listener only if the desktop input exists
+        document.addEventListener('click', (event) => {
+            const guestDropdown = document.getElementById('guest-dropdown');
+            if (guestDropdown && !desktopGuestsInput.contains(event.target) && !guestDropdown.contains(event.target)) {
+                guestDropdown.style.display = 'none';
+            }
+        });
+    }
 
-      // Initialize for Mobile
-      initGuestSelection('mobile-guests', 'mobile-guest-options', 'mobile-adults-count', 'mobile-children-count', initialAdults, initialChildren);
-      new Litepicker({ element: document.getElementById('mobile-dates'), singleMode: false, format: 'DD MMM', maxDate: maxDate, startDate: initialStartDate, endDate: initialEndDate });
-      
-      
-      document.addEventListener('click', (event) => {
-        const guestInput = document.getElementById('guests');
-        const guestDropdown = document.getElementById('guest-dropdown');
-        if (guestDropdown && !guestInput.contains(event.target) && !guestDropdown.contains(event.target)) {
-            guestDropdown.style.display = 'none';
-        }
-      });
+    // Initialize for Mobile (ONLY IF ELEMENTS EXIST)
+    const mobileDatesInput = document.getElementById('mobile-dates');
+    const mobileGuestsInput = document.getElementById('mobile-guests');
+    if (mobileDatesInput) {
+        new Litepicker({ 
+            element: mobileDatesInput, 
+            singleMode: false, 
+            format: 'DD MMM', 
+            maxDate: maxDate, 
+            startDate: initialStartDate, 
+            endDate: initialEndDate 
+        });
+    }
+    if (mobileGuestsInput) {
+        initGuestSelection('mobile-guests', 'mobile-guest-options', 'mobile-adults-count', 'mobile-children-count', initialAdults, initialChildren);
+    }
 
+
+
+
+      
       const taxSwitches = document.querySelectorAll(".tax-switch");
       const taxInfos = document.getElementsByClassName("tax-info");
       taxSwitches.forEach((taxSwitch) => {

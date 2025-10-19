@@ -151,5 +151,29 @@ module.exports.searchListings = async (req, res) => {
         return { ...listing._doc, displayPrice: Math.round(finalPrice) };
     });
 
+    
+
     res.render("listings/index.ejs", { allListings: updatedListings, category: "Search Results", searchParams: { location, dates, guests } });
+};
+
+module.exports.renderPaymentPage = async (req, res) => {
+    const { id } = req.params;
+    const price = req.query.price; 
+
+    const listing = await Listing.findById(id).populate('reviews').populate('owner');
+    if (!listing) {
+        req.flash('error', 'Listing not found.');
+        return res.redirect('/listings');
+    }
+
+    if (!price) {
+        req.flash('error', 'Booking price is missing.');
+        return res.redirect(`/listings/${id}`);
+    }
+
+    res.render('listings/payment.ejs', {
+        listing,
+        price,
+        searchParams: {} 
+    });
 };
