@@ -11,7 +11,7 @@
                 <div class="card mb-3">
                     <div class="row g-0">
                         <div class="col-4">
-                            <img src="<%= listing.image.url %>" class="img-fluid rounded-start" alt="Listing Image" style="height: 120px; object-fit: cover;">
+                            <img src="<%= listing.image.url %>" class="img-fluid rounded-start rounded-end" alt="Listing Image" style="height: 120px; object-fit: cover;">
                         </div>
                         <div class="col-8">
                             <div class="card-body">
@@ -56,7 +56,7 @@
                 <h4>Have a Coupon?</h4>
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Enter coupon code" id="coupon-code">
-                    <button class="btn btn-outline-secondary" type="button" id="apply-coupon-btn">Apply</button>
+                    <button class="btn btn-dark" style="background-color: #f3423d;" type="button" id="apply-coupon-btn">Apply</button>
                 </div>
             </div>
 
@@ -78,15 +78,15 @@
                 </div>
 
                 <div id="card-details" class="mt-3 border p-3 rounded">
-                    <h6>Enter Card Details</h6>
-                    <div class="mb-2">
-                        <input type="text" class="form-control" placeholder="Card Number">
-                    </div>
-                    <div class="row">
-                        <div class="col-7"><input type="text" class="form-control" placeholder="MM / YY"></div>
-                        <div class="col-5"><input type="text" class="form-control" placeholder="CVV"></div>
-                    </div>
-                </div>
+  <h6>Enter Card Details</h6>
+  <div class="mb-2">
+      <input type="number" class="form-control" placeholder="Card Number" id="card-number">
+  </div>
+  <div class="row">
+      <div class="col-7"><input type="number" class="form-control" placeholder="MM / YY" id="card-expiry"></div>
+      <div class="col-5"><input type="number" class="form-control" placeholder="CVV" id="card-cvv"></div>
+  </div>
+</div>
 
                 <div id="upi-details" class="mt-3 border p-3 rounded" style="display: none;">
                      <h6>Enter UPI ID</h6>
@@ -100,10 +100,41 @@
 </div>
 
 <script>
+    // --- Setup Payment Method Selection ---
     document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
         radio.addEventListener('change', function() {
             document.getElementById('card-details').style.display = this.value === 'card' ? 'block' : 'none';
             document.getElementById('upi-details').style.display = this.value === 'upi' ? 'block' : 'none';
         });
-    });
+    }); // <<<--- The forEach loop ends HERE
+
+    // --- NEW SCRIPT FOR LENGTH LIMITS (Now correctly placed outside the loop) ---
+    function enforceMaxLength(event) {
+        const input = event.target;
+        // Ensure dataset.maxLength exists and is a number
+        const maxLength = parseInt(input.dataset.maxLength); 
+
+        if (!isNaN(maxLength) && input.value.length > maxLength) {
+            input.value = input.value.slice(0, maxLength); // Trim excess characters
+        }
+    }
+
+    // Find inputs and attach listeners
+    const cardNumberInput = document.getElementById('card-number');
+    const cardExpiryInput = document.getElementById('card-expiry');
+    const cardCvvInput = document.getElementById('card-cvv');
+
+    if (cardNumberInput) {
+        cardNumberInput.dataset.maxLength = 16;
+        cardNumberInput.addEventListener('input', enforceMaxLength);
+    }
+    if (cardExpiryInput) {
+        cardExpiryInput.dataset.maxLength = 4; // MMYY format
+        cardExpiryInput.addEventListener('input', enforceMaxLength);
+    }
+    if (cardCvvInput) {
+        cardCvvInput.dataset.maxLength = 3;
+        cardCvvInput.addEventListener('input', enforceMaxLength);
+    }
+    // --- END OF LENGTH LIMIT SCRIPT ---
 </script>
