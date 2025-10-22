@@ -1,138 +1,169 @@
 <% layout('layouts/boilerplate.ejs') -%>
 <body>
   <div class="row mt-3">
-    <div class="col-12 col-lg-8 offset-lg-2">
-      <h3><b><%= listing.title %></b></h3>
+    <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+      <h3><%= listing.title %></h3>
 
-      <div class="card mt-3 show-card listing-card">
-        <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="Listing Image">
-        <div class="card-body">
-          <p class="card-text">
-            <i><b>Property Is Owned by: </b><%= listing.owner.username %></i>
-          </p>
-          <p><b>Description: </b><%= listing.description %></p>
-
-          <% if (listing.averageRating > 0) { %>
-  <%
-    let ratingClass = "";
-    if (listing.averageRating < 2) ratingClass = "rating-red";
-    else if (listing.averageRating <= 3.5) ratingClass = "rating-yellow";
-    else if (listing.averageRating <= 4.7) ratingClass = "rating-green";
-    else ratingClass = "rating-dark-green";
-  %>
-  <div class="show-rating">
-    <div class="rating-score <%= ratingClass %>">
-      <b><i class="fa-solid fa-star"></i> <%= listing.averageRating.toFixed(1) %></b>
-    </div>
-    <div class="rating-count">
-      <%= listing.reviews.length %> Rating<%= listing.reviews.length > 1 ? 's' : '' %>
-    </div>
-  </div>
-<% } %>
-
-          <% if (listing.category && listing.category.length > 0) { %>
-            <h5><b>Categories</b></h5>
-            <p>
-              <% for(let category of listing.category) { %>
-                <a href="/listings?category=<%= category %>" class="category-link badge rounded-pill text-bg-secondary me-2">
-                  <%= category %>
-                </a>
+      <div class="row">
+        <div class="col-md-7">
+          <div class="card mt-3 show-card listing-card border-0 mb-3">
+            <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="Listing Image">
+            <div class="card-body px-0">
+              <p class="card-text"><i>Property Is Owned by: <%= listing.owner.username %></i></p>
+              <p><%= listing.description %></p>
+              <% if (listing.averageRating > 0) { %>
+                <%
+                  let ratingClass = "";
+                  if (listing.averageRating < 2) ratingClass = "rating-red";
+                  else if (listing.averageRating <= 3.5) ratingClass = "rating-yellow";
+                  else if (listing.averageRating <= 4.7) ratingClass = "rating-green";
+                  else ratingClass = "rating-dark-green";
+                %>
+                <div class="show-rating mb-2">
+                  <div class="rating-score <%= ratingClass %>"><b><i class="fa-solid fa-star"></i> <%= listing.averageRating.toFixed(1) %></b></div>
+                  <div class="rating-count"><%= listing.reviews.length %> Rating<%= listing.reviews.length > 1 ? 's' : '' %></div>
+                </div>
               <% } %>
-            </p>
-          <% } %>
-
-          <p class="card-text"><b>
-  &#8377;<%= Number(displayPrice).toLocaleString("en-IN") %>
-  <% if (isTotalPrice) { %>
-      total
-  <% } else { %>
-      /night
-  <% } %></b>
-</p>
-          <p><b>Location: </b><%= listing.location %></p>
-          <p><b>Country: </b><%= listing.country %></p>
-        </div>
-      </div>
-
-      <% if(currUser && listing.owner._id.equals(currUser._id)) { %>
-        <div class="btns mt-3 d-flex align-items-center">
-  <a href="/listings/<%= listing._id %>/edit" class="btn btn-danger edit-btn me-2">Edit</a>
-  <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST" class="me-2">
-    <button class="btn btn-dark">Delete</button>
-  </form>
-  
-  <a href="/listings/<%= listing._id %>/payment?price=<%= displayPrice %>" class="btn btn-danger add-btn">
-    Review & Book
-  </a>
-</div>
-      <% } %> 
-
-      <div class="mt-3 mb-3"><br><hr>
-        <% if(currUser) {%>
-          <h4>Leave a Review</h4>
-          <form action="/listings/<%= listing.id %>/reviews" method="POST" novalidate class="needs-validation">
-            <div class="mb-3 mt-3">
-              <label for="rating" class="form-label"><b>Rating</b></label>
-              <fieldset class="starability-slot">
-                <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
-                <input type="radio" id="first-rate1" name="review[rating]" value="1" />
-                <label for="first-rate1" title="Terrible">1 star</label>
-                <input type="radio" id="first-rate2" name="review[rating]" value="2" />
-                <label for="first-rate2" title="Not good">2 stars</label>
-                <input type="radio" id="first-rate3" name="review[rating]" value="3" />
-                <label for="first-rate3" title="Average">3 stars</label>
-                <input type="radio" id="first-rate4" name="review[rating]" value="4" />
-                <label for="first-rate4" title="Very good">4 stars</label>
-                <input type="radio" id="first-rate5" name="review[rating]" value="5" />
-                <label for="first-rate5" title="Amazing">5 stars</label>
-              </fieldset>
-            </div>
-            <div class="mb-3 mt-3">
-              <label for="comment" class="form-label"><b>Comments</b></label>
-              <textarea name="review[comment]" id="comment" cols="30" rows="5" class="form-control" required></textarea>
-              <div class="invalid-feedback">Please Add Some Comment For Review</div>
-            </div>
-            <button class="btn btn-outline-dark">Submit</button>
-          </form>
-        <% } %>
-      </div>
-
-      <div class="row mt-4">
-        <h5><b>All Reviews</b></h5>
-        <% for(review of listing.reviews) { %>
-          <div class="col-md-6 mb-3">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title mt-2 px-2">@<%= review.author.username %></h5>
-                <p class="starability-result card-text " data-rating="<%= review.rating %>"></p>
-                <p class="card-text px-3"><%= review.comment %></p>
-              </div>
-              <% if(currUser && review.author._id.equals(currUser._id)) { %>
-                <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" class="mb-3 ms-3" method="POST">
-                  <button class="btn btn-sm btn-dark mt-2">Delete</button>
-                </form>
+              <% if (listing.category && listing.category.length > 0) { %>
+                <h5 class="mt-3">Categories</h5>
+                <p>
+                  <% for(let category of listing.category) { %>
+                    <a href="/listings?category=<%= category %>" class="category-link badge rounded-pill text-bg-secondary me-2"><%= category %></a>
+                  <% } %>
+                </p>
+              <% } %>
+              <p><%= listing.location %></p>
+              <p><%= listing.country %></p>
+              <% if(currUser && listing.owner._id.equals(currUser._id)) { %>
+                <div class="btns mt-3 d-flex align-items-center">
+                  <a href="/listings/<%= listing._id %>/edit" class="btn btn-danger edit-btn me-2">Edit</a>
+                  <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST" class="me-2"><button class="btn btn-dark">Delete</button></form>
+                  </div>
               <% } %>
             </div>
           </div>
+          <hr>
+        </div>
+
+        <div class="col-md-5">
+          <div class="booking-widget card shadow-sm mt-3 sticky-top">
+            <div class="card-body">
+              <h5 class="card-title price-display mb-3">
+                <b>₹<span id="widget-price"><%= Number(displayPrice).toLocaleString("en-IN") %></span></b>
+                <span id="price-label"><%= isTotalPrice ? ' total' : ' /night' %></span>
+              </h5>
+              <div class="row g-2 mb-3 date-guest-inputs">
+                <div class="col-6">
+                  <label for="widget-checkin" class="form-label small">CHECK-IN</label>
+                  <input type="text" class="form-control" id="widget-checkin" placeholder="Add date">
+                </div>
+                <div class="col-6">
+                  <label for="widget-checkout" class="form-label small">CHECKOUT</label>
+                  <input type="text" class="form-control" id="widget-checkout" placeholder="Add date">
+                </div>
+                <div class="col-12 position-relative">
+                   <label for="widget-guests" class="form-label small">GUESTS</label>
+                   <input type="text" class="form-control" id="widget-guests" placeholder="Add guests" readonly>
+                   <div id="widget-guest-dropdown" class="guest-dropdown-menu">
+                      <div class="guest-option">
+                        <span>Adults</span>
+                        <div class="guest-counter">
+                          <button type="button" class="counter-btn widget-counter-btn" data-type="adults" data-action="decrement">-</button>
+                          <span id="widget-adults-count">1</span>
+                          <button type="button" class="counter-btn widget-counter-btn" data-type="adults" data-action="increment">+</button>
+                        </div>
+                      </div>
+                      <div class="guest-option">
+                        <span>Children</span>
+                        <div class="guest-counter">
+                          <button type="button" class="counter-btn widget-counter-btn" data-type="children" data-action="decrement">-</button>
+                          <span id="widget-children-count">0</span>
+                          <button type="button" class="counter-btn widget-counter-btn" data-type="children" data-action="increment">+</button>
+                        </div>
+                      </div>
+                   </div>
+                </div>
+              </div>
+              <a href="/listings/<%= listing._id %>/payment?price=<%= displayPrice %>" id="reserve-button" class="btn btn-danger add-btn w-100">Reserve</a>
+              <p class="text-muted text-center small mt-2">You won't be charged yet</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="mt-4">
+      <div class="mt-3 mb-3">
+        <% if(currUser) {%>
+          <h4>Leave a Review</h4>
+          <form action="/listings/<%= listing.id %>/reviews" method="POST" novalidate class="needs-validation">
+             <div class="mb-3 mt-3">
+          <label for="rating" class="form-label">Rating</label>
+          <fieldset class="starability-slot">
+              <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
+              <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+              <label for="first-rate1" title="Terrible">1 star</label>
+              <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+              <label for="first-rate2" title="Not good">2 stars</label>
+              <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+              <label for="first-rate3" title="Average">3 stars</label>
+              <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+              <label for="first-rate4" title="Very good">4 stars</label>
+              <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+              <label for="first-rate5" title="Amazing">5 stars</label>
+          </fieldset>
+      </div>
+
+      <div class="mb-3 mt-3">
+          <label for="comment" class="form-label">Comments</label>
+          <textarea name="review[comment]" id="comment" cols="30" rows="5" class="form-control" required></textarea>
+          <div class="invalid-feedback">Please Add Some Comment For Review</div>
+      </div>
+
+      <button class="btn btn-outline-dark">Submit</button>
+  </form>
+          </form>
         <% } %>
       </div>
+      <div class="row mt-4">
+  <h5><b>All Reviews</b></h5>
+  <% if (listing.reviews && listing.reviews.length > 0) { %> 
+      <% for(review of listing.reviews) { %>
+        <div class="col-md-6 mb-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title mt-2 px-2">@<%= review.author ? review.author.username : 'Deleted User' %></h5> 
+              <p class="starability-result card-text " data-rating="<%= review.rating %>"></p>
+              <p class="card-text px-3"><%= review.comment %></p>
+            </div>
+            <% if(currUser && review.author && review.author._id.equals(currUser._id)) { %> 
+              <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" class="mb-3 ms-3" method="POST">
+                <button class="btn btn-sm btn-dark mt-2">Delete</button>
+              </form>
+            <% } %>
+          </div>
+        </div>
+      <% } %>
+  <% } else { %>
+      <p>No reviews yet.</p> 
+  <% } %>
+</div>
     </div>
   </div>
   <script>
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Guest Selection Logic (Copied from index.ejs) ---
-    function initGuestSelection(guestInputId, guestDropdownId, adultsCountId, childrenCountId, startAdults = 1, startChildren = 0) {
+    // --- Initialize Navbar Guest Selection (if navbar exists) ---
+    function initGuestSelection(guestInputId, guestDropdownId, adultsCountId, childrenCountId, startAdults = 1, startChildren = 0, priceUpdateCallback = null) {
         const guestInput = document.getElementById(guestInputId);
         const guestDropdown = document.getElementById(guestDropdownId);
-        if (!guestInput || !guestDropdown) return;
+        if (!guestInput || !guestDropdown) return null; // Return null if elements don't exist
 
         const adultsCountEl = document.getElementById(adultsCountId);
         const childrenCountEl = document.getElementById(childrenCountId);
         let adults = startAdults;
         let children = startChildren;
-        
-        if(adultsCountEl) adultsCountEl.textContent = adults;
-        if(childrenCountEl) childrenCountEl.textContent = children;
+
+        if (adultsCountEl) adultsCountEl.textContent = adults;
+        if (childrenCountEl) childrenCountEl.textContent = children;
 
         function updateGuestInput() {
             let guestText = `${adults} Adult${adults > 1 ? 's' : ''}`;
@@ -143,6 +174,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         guestInput.addEventListener('click', (event) => {
             event.stopPropagation();
+            // Close other dropdowns if any
+            document.querySelectorAll('.guest-dropdown-menu').forEach(el => {
+                if(el !== guestDropdown) el.style.display = 'none';
+            });
             guestDropdown.style.display = guestDropdown.style.display === 'block' ? 'none' : 'block';
         });
 
@@ -158,49 +193,114 @@ document.addEventListener('DOMContentLoaded', () => {
                     childrenCountEl.textContent = children;
                 }
                 updateGuestInput();
+                // Call the price update function if provided
+                if (priceUpdateCallback) setTimeout(priceUpdateCallback, 50);
             }
         });
+        
+        // Return a function to get current guest values
+        return () => ({ adults, children, guestString: guestInput.value });
     }
 
-    // Initialize guest selection for the desktop navbar
-    initGuestSelection('guests', 'guest-dropdown', 'adults-count', 'children-count');
+    // Initialize guest selection for the NAVBAR (if present)
+    const getNavbarGuests = initGuestSelection('guests', 'guest-dropdown', 'adults-count', 'children-count');
 
-    // Close dropdown when clicking outside
+    // Close navbar dropdown when clicking outside
     document.addEventListener('click', (event) => {
         const guestInput = document.getElementById('guests');
         const guestDropdown = document.getElementById('guest-dropdown');
-        if (guestDropdown && !guestInput.contains(event.target) && !guestDropdown.contains(event.target)) {
+        if (guestDropdown && guestInput && !guestInput.contains(event.target) && !guestDropdown.contains(event.target)) {
             guestDropdown.style.display = 'none';
         }
     });
 
-    // --- Dynamic Price Calculation Logic (Already on your show page) ---
-    const datesInput = document.getElementById('dates');
-    const guestsInput = document.getElementById('guests'); // This now works
-    const priceElement = document.getElementById('listing-price');
+    // --- Booking Widget Logic ---
+    const widgetCheckinInput = document.getElementById('widget-checkin');
+    const widgetCheckoutInput = document.getElementById('widget-checkout');
+    const widgetGuestsInput = document.getElementById('widget-guests');
+    const widgetPriceElement = document.getElementById('widget-price');
+    const widgetPriceLabel = document.getElementById('price-label');
+    const reserveButton = document.getElementById('reserve-button');
     const listingId = "<%= listing._id %>";
 
-    async function updatePrice() {
-        // ... (your existing updatePrice function) ...
-    }
+    // Initialize guest selection for the WIDGET, passing updatePrice as the callback
+    const getWidgetGuests = initGuestSelection('widget-guests', 'widget-guest-dropdown', 'widget-adults-count', 'widget-children-count', 1, 0, updatePrice);
 
-    // Initialize the date picker
-    const datePicker = new Litepicker({ 
-        element: datesInput,
-        singleMode: false,
-        format: 'DD MMM',
-        onSelect: updatePrice 
+    // Close widget dropdown when clicking outside
+     document.addEventListener('click', (event) => {
+        const guestInput = document.getElementById('widget-guests');
+        const guestDropdown = document.getElementById('widget-guest-dropdown');
+        if (guestDropdown && guestInput && !guestInput.contains(event.target) && !guestDropdown.contains(event.target)) {
+            guestDropdown.style.display = 'none';
+        }
     });
 
-    // Make the guest dropdown trigger the price update
-    const guestDropdown = document.getElementById('guest-dropdown');
-    if (guestDropdown) {
-        guestDropdown.addEventListener('click', (event) => {
-            if (event.target.classList.contains('counter-btn')) {
-                setTimeout(updatePrice, 50);
-            }
-        });
+    // Dynamic Price Update Function
+    async function updatePrice() {
+        if (!widgetCheckinInput || !widgetCheckoutInput || !widgetGuestsInput || !widgetPriceElement || !getWidgetGuests) return;
+
+        const checkinDate = widgetPicker.getStartDate();
+        const checkoutDate = widgetPicker.getEndDate();
+        const { guestString } = getWidgetGuests(); // Get current guest string from widget
+
+        if (!checkinDate || !checkoutDate || !guestString) return; // Don't update if dates/guests not set
+
+
+        // Helper function to format Date object to YYYY-MM-DD
+    function formatDate(date) {
+        const d = new Date(date);
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+        const day = String(d.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
     }
+
+
+        // Format dates correctly for Litepicker output and URL
+        const startDateStr = formatDate(checkinDate.toJSDate()); // Convert Litepicker date to JS Date, then format
+    const endDateStr = formatDate(checkoutDate.toJSDate()); 
+    const datesParam = `${startDateStr} - ${endDateStr}`;
+        
+
+
+    console.log("Sending Dates:", datesParam);
+
+
+        const url = `/listings/${listingId}/calculate-price?dates=${encodeURIComponent(datesParam)}&guests=${encodeURIComponent(guestString)}`;
+
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error('Price calculation failed');
+            const data = await response.json();
+
+            widgetPriceElement.textContent = data.newPrice.toLocaleString('en-IN');
+            widgetPriceLabel.textContent = ' total'; // Always show 'total' when dates are selected
+
+            // Update Reserve button link
+            reserveButton.href = `/listings/${listingId}/payment?price=${data.newPrice}`;
+
+        } catch (error) {
+            console.error("Error updating price:", error);
+            widgetPriceElement.textContent = 'N/A'; // Show error or default
+            widgetPriceLabel.textContent = '';
+        }
+    }
+
+    // Initialize Litepicker for the WIDGET
+    const widgetPicker = new Litepicker({
+        element: widgetCheckinInput,
+        elementEnd: widgetCheckoutInput,
+        singleMode: false,
+        format: 'DD MMM YYYY', // Use a format that works for parsing
+        minDate: new Date(), // Prevent booking past dates
+        numberOfMonths: 1, // Show one month like Airbnb
+        selectForward: true, // Only allow selecting future dates
+        setup: (picker) => {
+             picker.on('selected', (date1, date2) => {
+                 updatePrice(); // Update price when dates are selected
+             });
+         }
+    });
 });
 </script>
 </body>

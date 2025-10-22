@@ -463,3 +463,45 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+/* Booking Widget Styles */
+.booking-widget {
+  border: 1px solid #ddd;
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+
+/* Make widget sticky on medium screens and up */
+@media (min-width: 768px) {
+  .booking-widget.sticky-top {
+    top: 6rem; /* Adjust based on your navbar height */
+  }
+}
+
+.booking-widget .form-label.small {
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.booking-widget .price-display {
+  font-size: 1.25rem;
+}
+
+.date-guest-inputs .form-control {
+  font-size: 0.9rem;
+}
+
+.guest-item input { /* Make sure this style still applies */
+    cursor: pointer;
+}
+
+/* Position the widget's guest dropdown relative to its input */
+.booking-widget .col-12.position-relative .guest-dropdown-menu {
+    top: 100%; /* Position below the input */
+    right: 0;
+    left: 0;
+    width: 100%;
+    transform: none; /* Reset transform from navbar version */
+    margin-top: 0.25rem;
+}

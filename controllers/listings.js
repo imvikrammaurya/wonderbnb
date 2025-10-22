@@ -177,3 +177,75 @@ module.exports.renderPaymentPage = async (req, res) => {
         searchParams: {} 
     });
 };
+
+// In controllers/listings.js
+
+module.exports.calculatePrice = async (req, res) => {
+    try { // Add a try...catch block to catch ANY error
+        const { id } = req.params;
+        const { dates, guests } = req.query;
+        console.log(`[calculatePrice] Received request for ID: ${id}, Dates: ${dates}, Guests: ${guests}`);
+
+        const listing = await Listing.findById(id);
+        if (!listing) {
+            console.error(`[calculatePrice] Listing not found for ID: ${id}`);
+            return res.status(404).json({ error: "Listing not found" });
+        }
+        console.log(`[calculatePrice] Found listing: ${listing.title}, Base price: ${listing.price}`);
+
+        // --- Date Parsing (using UTC) ---
+        let startDate, endDate;
+        if (dates && dates.includes(' - ')) {
+            const [startDateStr, endDateStr] = dates.split(' - ');
+            startDate = new Date(startDateStr.trim() + 'T00:00:00.000Z');
+            endDate = new Date(endDateStr.trim() + 'T00:00:00.000Z');
+
+            if (isNaN(startDate.getTime()) || isNaN(endDate.getTime()) || startDate >= endDate) {
+                console.warn(`[calculatePrice] Invalid dates received: ${dates}. Falling back to default.`);
+                startDate = new Date(); startDate.setUTCHours(0, 0, 0, 0);
+                endDate = new Date(startDate); endDate.setUTCDate(startDate.getUTCDate() + 1);
+            }
+        } else {
+            console.warn(`[calculatePrice] Dates missing or invalid format: ${dates}. Falling back to default.`);
+            startDate = new Date(); startDate.setUTCHours(0, 0, 0, 0);
+            endDate = new Date(startDate); endDate.setUTCDate(startDate.getUTCDate() + 1);
+        }
+        console.log(`[calculatePrice] Parsed Start Date: ${startDate.toISOString()}, End Date: ${endDate.toISOString()}`);
+        // --- End Date Parsing ---
+
+        const numAdults = guests ? parseInt(guests.match(/(\d+) Adult/)?.[1] || '1') : 1;
+        const numChildren = guests ? parseInt(guests.match(/(\d+) Child/)?.[1] || '0') : 0;
+        console.log(`[calculatePrice] Parsed Guests: Adults=${numAdults}, Children=${numChildren}`);
+
+        let baseNightlyGuestPrice = listing.price * (1 + (0.10 * (numAdults - 1)));
+        if (numChildren > 0) {
+            baseNightlyGuestPrice *= (1 + (0.05 * numChildren));
+        }
+        console.log(`[calculatePrice] Base nightly price (with guests): ${baseNightlyGuestPrice}`);
+
+        let finalPrice = 0;
+        let currentDate = new Date(startDate);
+
+        while (currentDate.getTime() < endDate.getTime()) {
+            const dayOfWeek = currentDate.getUTCDay(); // 0=Sun, 6=Sat
+            let dailyPrice = baseNightlyGuestPrice;
+            console.log(`[calculatePrice] Processing date: ${currentDate.toISOString().split('T')[0]}, Day: ${dayOfWeek}`);
+
+            switch (dayOfWeek) {
+                case 6: case 0: dailyPrice *= 1.40; break;
+                case 3: case 5: dailyPrice *= 1.20; break;
+            }
+            finalPrice += dailyPrice;
+            console.log(`[calculatePrice] Daily price: ${dailyPrice.toFixed(2)}, Cumulative price: ${finalPrice.toFixed(2)}`);
+            currentDate.setUTCDate(currentDate.getUTCDate() + 1);
+        }
+        
+        const roundedFinalPrice = Math.round(finalPrice);
+        console.log(`[calculatePrice] Final calculated price: ${roundedFinalPrice}`);
+        res.json({ newPrice: roundedFinalPrice });
+
+    } catch (error) { // Catch ANY unexpected error during the process
+        console.error("[calculatePrice] UNEXPECTED ERROR:", error); // Log the full error to the terminal
+        res.status(500).json({ error: "Internal server error during price calculation." });
+    }
+};
