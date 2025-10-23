@@ -121,7 +121,6 @@
 
       <button class="btn btn-outline-dark">Submit</button>
   </form>
-          </form>
         <% } %>
       </div>
       <div class="row mt-4">
@@ -151,6 +150,7 @@
   </div>
   <script>
 document.addEventListener('DOMContentLoaded', () => {
+
     // --- Initialize Navbar Guest Selection (if navbar exists) ---
     function initGuestSelection(guestInputId, guestDropdownId, adultsCountId, childrenCountId, startAdults = 1, startChildren = 0, priceUpdateCallback = null) {
         const guestInput = document.getElementById(guestInputId);
@@ -226,14 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize guest selection for the WIDGET, passing updatePrice as the callback
     const getWidgetGuests = initGuestSelection('widget-guests', 'widget-guest-dropdown', 'widget-adults-count', 'widget-children-count', 1, 0, updatePrice);
 
-    // Close widget dropdown when clicking outside
-     document.addEventListener('click', (event) => {
-        const guestInput = document.getElementById('widget-guests');
-        const guestDropdown = document.getElementById('widget-guest-dropdown');
-        if (guestDropdown && guestInput && !guestInput.contains(event.target) && !guestDropdown.contains(event.target)) {
-            guestDropdown.style.display = 'none';
-        }
-    });
+    
 
     // Dynamic Price Update Function
     async function updatePrice() {

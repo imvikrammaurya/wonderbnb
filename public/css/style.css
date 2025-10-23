@@ -474,7 +474,9 @@ input[type=number] {
 /* Make widget sticky on medium screens and up */
 @media (min-width: 768px) {
   .booking-widget.sticky-top {
-    top: 6rem; /* Adjust based on your navbar height */
+    position: sticky !important; /* Explicitly set sticky */
+    top: calc(5rem + 20px);        /* Set a fixed offset below the navbar (adjust 80px if needed) */
+    z-index: 1020;    /* Ensure it stays above other content */
   }
 }
 
@@ -483,6 +485,11 @@ input[type=number] {
   font-weight: 600;
   margin-bottom: 0.25rem;
 }
+/* Ensure the parent column doesn't interfere */
+.col-md-5 {
+    align-self: flex-start; /* Aligns the column to the top */
+}
+
 
 .booking-widget .price-display {
   font-size: 1.25rem;
@@ -505,3 +512,4 @@ input[type=number] {
     transform: none; /* Reset transform from navbar version */
     margin-top: 0.25rem;
 }
+
