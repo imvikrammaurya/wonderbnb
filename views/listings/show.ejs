@@ -42,7 +42,7 @@
               <% } %>
             </div>
           </div>
-          <hr>
+          <!-- <hr> -->
         </div>
 
         <div class="col-md-5">
@@ -150,12 +150,13 @@
   </div>
   <script>
 document.addEventListener('DOMContentLoaded', () => {
+  
 
     // --- Initialize Navbar Guest Selection (if navbar exists) ---
     function initGuestSelection(guestInputId, guestDropdownId, adultsCountId, childrenCountId, startAdults = 1, startChildren = 0, priceUpdateCallback = null) {
         const guestInput = document.getElementById(guestInputId);
         const guestDropdown = document.getElementById(guestDropdownId);
-        if (!guestInput || !guestDropdown) return null; // Return null if elements don't exist
+        if (!guestInput || !guestDropdown) return null; 
 
         const adultsCountEl = document.getElementById(adultsCountId);
         const childrenCountEl = document.getElementById(childrenCountId);

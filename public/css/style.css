@@ -134,6 +134,9 @@ body{
 
 .show-img{ 
     height: 30vh;
+    object-fit: cover;
+    width: 100%;
+    border-radius: 1rem;
 }
 
 .btns{
@@ -453,15 +456,27 @@ body{
   padding: 1rem;
 }
 
+/* Hide number input spinners (arrows) */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
-/* For Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+/* Show Page - Flex Layout */
+.show-page-main-content {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  gap: 2rem;       /* Space between columns */
+  align-items: flex-start; /* Align columns to the top */
+}
+
+.listing-details {
+  flex: 2;         /* Details take approx 2/3rds */
+  min-width: 300px;
 }
 
 /* Booking Widget Styles */
@@ -469,15 +484,8 @@ input[type=number] {
   border: 1px solid #ddd;
   border-radius: 0.75rem;
   padding: 1rem;
-}
-
-/* Make widget sticky on medium screens and up */
-@media (min-width: 768px) {
-  .booking-widget.sticky-top {
-    position: sticky !important; /* Explicitly set sticky */
-    top: calc(5rem + 20px);        /* Set a fixed offset below the navbar (adjust 80px if needed) */
-    z-index: 1020;    /* Ensure it stays above other content */
-  }
+  flex: 1;          /* Widget takes approx 1/3rd */
+  min-width: 280px;
 }
 
 .booking-widget .form-label.small {
@@ -485,11 +493,6 @@ input[type=number] {
   font-weight: 600;
   margin-bottom: 0.25rem;
 }
-/* Ensure the parent column doesn't interfere */
-.col-md-5 {
-    align-self: flex-start; /* Aligns the column to the top */
-}
-
 
 .booking-widget .price-display {
   font-size: 1.25rem;
@@ -499,17 +502,38 @@ input[type=number] {
   font-size: 0.9rem;
 }
 
-.guest-item input { /* Make sure this style still applies */
+.guest-item input {
     cursor: pointer;
 }
 
 /* Position the widget's guest dropdown relative to its input */
 .booking-widget .col-12.position-relative .guest-dropdown-menu {
-    top: 100%; /* Position below the input */
+    top: 100%;
     right: 0;
     left: 0;
     width: 100%;
-    transform: none; /* Reset transform from navbar version */
+    transform: none;
     margin-top: 0.25rem;
+    /* Ensure dropdown is visible if widget is sticky */
+    z-index: 1021; /* Slightly higher than widget */
 }
 
+/* --- Consolidated Sticky Styles --- */
+
+/* Ensure Navbar is always on top */
+.navbar.sticky-top {
+  height: 5rem;
+  background-color: white;
+  z-index: 1030 !important; /* High z-index */
+}
+
+/* Make widget sticky ONLY on medium screens and up */
+@media (min-width: 768px) {
+  .booking-widget.sticky-top {
+    position: sticky !important; /* Apply sticky positioning */
+    top: calc(5rem + 20px);    /* Calculate offset below navbar */
+    z-index: 1020;            /* Lower than navbar */
+    align-self: flex-start;   /* Align widget to top of flex container */
+    height: fit-content;      /* Prevent stretching */
+  }
+}
