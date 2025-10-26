@@ -286,7 +286,7 @@
         });
       });
 
-      // --- SIMPLIFIED AND FIXED HOMEPAGE PRICING LOGIC ---
+
       const isHomepage = !new URLSearchParams(window.location.search).has('location');
       if (isHomepage) {
           const dayOfWeek = today.getDay();
@@ -309,7 +309,6 @@
         priceValueElement.textContent = `₹${newPrice.toLocaleString('en-IN')}`;
     }
 
-    // --- ADD THIS PART ---
     // Find the parent link element
     const linkElement = priceParagraph.closest('.listing-link'); 
     if (linkElement) {
@@ -320,7 +319,6 @@
         // Set the link's href to the new URL
         linkElement.href = currentUrl.toString();
     }
-    // --- END ---
 });
           }
       }
