@@ -38,6 +38,16 @@ const listingSchema = new Schema ({
       type: Schema.Types.ObjectId,
       ref: "User",
     },
+    amenities: [{
+        type: String,
+        enum: [ 
+            'Wifi', 'Air Conditioning', 'TV', 'Kitchen', 'Pool', 'Free Parking',
+            'Hot Tub', 'Washer', 'Dryer', 'Heating', 'Gym', 'Breakfast',
+            'EV Charger', 'Pet Friendly', 'Power Backup', 'Geyser', 'Security Cameras',
+            'Room Service', 'Restaurant', 'Lift', 'Conference Room', 'Spa'
+
+        ]
+    }],
     averageRating: {
     type: Number,
     default: 0,

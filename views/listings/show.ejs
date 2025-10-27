@@ -9,8 +9,53 @@
           <div class="card mt-3 show-card listing-card border-0 mb-3">
             <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="Listing Image">
             <div class="card-body px-0">
-              <p class="card-text"><i>Property Is Owned by: <%= listing.owner.username %></i></p>
-              <p><%= listing.description %></p>
+              <p class="card-text"><i><b>Property Is Owned by:</b> <%= listing.owner.username %></i></p>
+              <p><b>Description: </b><%= listing.description %></p>
+
+<!-- Check if amenities exist and the array is not empty -->
+<% if (listing.amenities && listing.amenities.length > 0) { %>
+  <hr>
+  <h5>What this place offers</h5>
+  <div class="row row-cols-2 g-3 mb-3">
+    <% for(let amenity of listing.amenities) { %>
+      
+      <% 
+         let iconClass = 'fa-solid fa-question'; 
+         switch (amenity) {
+            case 'Wifi': iconClass = 'fa-solid fa-wifi'; break;
+            case 'Air Conditioning': iconClass = 'fa-solid fa-snowflake'; break; 
+            case 'TV': iconClass = 'fa-solid fa-tv'; break;
+            case 'Kitchen': iconClass = 'fa-solid fa-kitchen-set'; break;
+            case 'Pool': iconClass = 'fa-solid fa-person-swimming'; break;
+            case 'Free Parking': iconClass = 'fa-solid fa-square-parking'; break;
+            case 'Hot Tub': iconClass = 'fa-solid fa-hot-tub-person'; break;
+            case 'Washer': iconClass = 'fa-solid fa-jug-detergent'; break; 
+            case 'Dryer': iconClass = 'fa-solid fa-temperature-arrow-up'; break; 
+            case 'Heating': iconClass = 'fa-solid fa-fire'; break;
+            case 'Gym': iconClass = 'fa-solid fa-dumbbell'; break;
+            case 'Breakfast': iconClass = 'fa-solid fa-mug-saucer'; break;
+            case 'EV Charger': iconClass = 'fa-solid fa-charging-station'; break;
+            case 'Pet Friendly': iconClass = 'fa-solid fa-paw'; break;
+            case 'Power Backup': iconClass = 'fa-solid fa-bolt'; break;
+            case 'Geyser': iconClass = 'fa-solid fa-faucet-drip'; break; 
+            case 'Security Cameras': iconClass = 'fa-solid fa-camera-retro'; break;
+            case 'Room Service': iconClass = 'fa-solid fa-bell-concierge'; break;
+            case 'Restaurant': iconClass = 'fa-solid fa-utensils'; break;
+            case 'Lift': iconClass = 'fa-solid fa-elevator'; break;
+            case 'Conference Room': iconClass = 'fa-solid fa-briefcase'; break;
+            
+         }
+      %>
+      <div class="col-auto"> <%# Use col-auto so pills take only needed width %>
+        <div class="amenity-pill"> <%# New class for styling %>
+          <i class="<%= iconClass %> me-2"></i> <%# Added margin to icon %>
+          <span><%= amenity %></span>
+        </div>
+      </div>
+    <% } %>
+  </div>
+<% } %>
+
               <% if (listing.averageRating > 0) { %>
                 <%
                   let ratingClass = "";
@@ -25,15 +70,15 @@
                 </div>
               <% } %>
               <% if (listing.category && listing.category.length > 0) { %>
-                <h5 class="mt-3">Categories</h5>
+                <h5 class="mt-3"><b>Categories</b></h5>
                 <p>
                   <% for(let category of listing.category) { %>
                     <a href="/listings?category=<%= category %>" class="category-link badge rounded-pill text-bg-secondary me-2"><%= category %></a>
                   <% } %>
                 </p>
               <% } %>
-              <p><%= listing.location %></p>
-              <p><%= listing.country %></p>
+              <p><b>Location: </b><%= listing.location %></p>
+              <p><b>Country: </b><%= listing.country %></p>
               <% if(currUser && listing.owner._id.equals(currUser._id)) { %>
                 <div class="btns mt-3 d-flex align-items-center">
                   <a href="/listings/<%= listing._id %>/edit" class="btn btn-danger edit-btn me-2">Edit</a>

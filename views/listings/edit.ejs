@@ -13,12 +13,46 @@
         <div class="invalid-feedback">Enter title for your property</div>
         </div>
 
+        <div class="mb-3">
+    <label class="form-label fw-bold">Amenities</label>
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-2">
+        <% 
+           // Define all possible amenities here (must match schema enum)
+           const allAmenities = [
+               'Wifi', 'Air Conditioning', 'TV', 'Kitchen', 'Pool', 'Free Parking',
+               'Hot Tub', 'Washer', 'Dryer', 'Heating', 'Gym', 'Breakfast',
+               'EV Charger', 'Pet Friendly', 'Power Backup', 'Geyser', 'Security Cameras',
+               'Room Service', 'Restaurant', 'Lift', 'Conference Room'
+           ];
+           // For edit.ejs, get the listing's current amenities
+           const currentAmenities = typeof listing !== 'undefined' ? listing.amenities : []; 
+        %>
+        <% for(let amenity of allAmenities) { %>
+            <div class="col">
+                <div class="form-check">
+                    <input class="form-check-input" 
+                           type="checkbox" 
+                           value="<%= amenity %>" 
+                           id="amenity-<%= amenity.replace(/\s+/g, '-') %>" 
+                           name="listing[amenities]"
+                           <%# Check the box if it's included in the listing's amenities (for edit page) %>
+                           <%= currentAmenities.includes(amenity) ? 'checked' : '' %>>
+                    <label class="form-check-label" for="amenity-<%= amenity.replace(/\s+/g, '-') %>">
+                        <%= amenity %>
+                    </label>
+                </div>
+            </div>
+        <% } %>
+    </div>
+</div>
 
         <div class="mb-3">
             <label for="description" class="form-label">Description</label>
             <textarea name="listing[description]" class="form-control" required><%= listing.description %></textarea>
             <div class="invalid-feedback">Write something about your property</div>
         </div>
+
+
 
         <div class="mb-3">
   <label for="category" class="form-label">Category</label>
