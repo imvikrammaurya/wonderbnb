@@ -2,7 +2,12 @@
 <body>
   <div class="row mt-3">
     <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
-      <h3><%= listing.title %></h3>
+      <div class="d-flex justify-content-between align-items-center">
+  <h3><%= listing.title %></h3>
+  <button class="btn btn-outline-secondary btn-sm" id="copy-link-btn">
+    <i class="fa-solid fa-share-nodes"></i> Share
+  </button>
+</div>
 
       <div class="row">
         <div class="col-md-7">
@@ -340,6 +345,34 @@ document.addEventListener('DOMContentLoaded', () => {
              });
          }
     });
+    const copyLinkBtn = document.getElementById('copy-link-btn');
+    if (copyLinkBtn) {
+        copyLinkBtn.addEventListener('click', async () => {
+            const listingUrl = window.location.href; // Gets the current page URL
+            const originalText = copyLinkBtn.innerHTML;
+
+            try {
+                // Try to copy the URL to the clipboard
+                await navigator.clipboard.writeText(listingUrl);
+                
+                // Give user feedback:
+                copyLinkBtn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+                copyLinkBtn.classList.add('btn-success');
+                
+                // Revert button text after 2 seconds
+                setTimeout(() => {
+                    copyLinkBtn.innerHTML = originalText;
+                    copyLinkBtn.classList.remove('btn-success');
+                }, 2000);
+
+            } catch (err) {
+                console.error('Failed to copy link: ', err);
+                alert('Failed to copy link. Please copy it from your address bar.');
+            }
+        });
+    }
 });
+
+
 </script>
 </body>
