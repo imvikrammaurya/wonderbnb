@@ -110,6 +110,7 @@ body{
     display: block;         
     flex-direction: column;
     height: 100%; 
+    position: relative;
 }
 
 .card-img-overlay{
@@ -556,3 +557,29 @@ input[type=number] {
   color: #555; 
 }
 
+.save-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: none;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  z-index: 10;
+  color: #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.save-btn:hover {
+  background-color: rgba(255, 255, 255, 1);
+  transform: scale(1.1);
+}
+
+.save-btn .fa-solid.fa-heart {
+    color: #fe423d; /* Red heart when saved */
+}

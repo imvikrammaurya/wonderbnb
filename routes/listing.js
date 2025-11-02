@@ -42,6 +42,7 @@ router.get("/search", wrapAsync(listingController.searchListings));
 router.get("/:id/calculate-price", wrapAsync(listingController.calculatePrice)); // <-- Move this UP
 router.get("/:id/payment", isLoggedIn, wrapAsync(listingController.renderPaymentPage));
 router.get("/:id/edit", isLoggedIn, isOwner, wrapAsync (listingController.renderEditForm)); // <-- Edit route AFTER calculate-price
+router.post("/:id/save", isLoggedIn, wrapAsync(listingController.toggleWishlist));
 
 router.route("/:id")
 .get( wrapAsync (listingController.showListing))

@@ -4,12 +4,12 @@
   /* Main filter container */
   #filters {
     display: flex;
-    flex-wrap: nowrap; /* Prevents items from wrapping to the next line */
-    overflow-x: auto; /* Enables horizontal scrolling */
+    flex-wrap: nowrap; 
+    overflow-x: auto; 
     align-items: center;
-    /* Hide the scrollbar for different browsers */
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    
+    -ms-overflow-style: none;  
+    scrollbar-width: none;  
   }
 
   /* Hide scrollbar for Chrome, Safari and Opera */
@@ -24,8 +24,8 @@
     margin-top: 1.2rem;
     opacity: 0.7;
     cursor: pointer;
-    flex-shrink: 0; /* Prevents icons from shrinking */
-    min-width: 80px;  /* Helps control how many are visible */
+    flex-shrink: 0; 
+    min-width: 80px; 
   }
 
   .filter:hover {
@@ -111,6 +111,10 @@
           <div class="card listing-card h-100">
             <a href="/listings/<%= listing._id %>?price=<%= typeof listing.displayPrice !== 'undefined' ? listing.displayPrice : listing.price %>" class="listing-link">
               <img src="<%= listing.image.url%>" class="card-img-top" alt="Listing image" style="height: 20rem;">
+              <% const isSaved = wishlist.some(savedId => savedId.equals(listing._id)); %>
+  <button class="save-btn" data-listing-id="<%= listing._id %>">
+      <i class="fa-<%= isSaved ? 'solid' : 'regular' %> fa-heart"></i>
+      </button>
               <div class="card-img-overlay"></div>
               <div class="card-body d-flex flex-column">
                 <div class="card-title-wrapper">

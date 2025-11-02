@@ -46,3 +46,19 @@ module.exports.logout = (req, res, next) => {
         res.redirect("/listings");
     });
 };
+
+module.exports.showWishlist = async (req, res) => {
+  // Find the current user and populate their wishlist with listing details
+  const user = await User.findById(req.user._id).populate("wishlist");
+  
+  if (!user) {
+    req.flash("error", "User not found.");
+    return res.redirect("/listings");
+  }
+
+  res.render("users/wishlist.ejs", {
+    allListings: user.wishlist, // Pass the populated listings
+    category: "My Wishlist",
+    searchParams: {}, // For the navbar
+  });
+};

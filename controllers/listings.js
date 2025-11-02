@@ -1,4 +1,5 @@
 const Listing = require("../models/listing");
+const User = require("../models/user");
 
 // COMBINED AND CORRECTED INDEX FUNCTION
 module.exports.index = async (req, res) => {
@@ -11,7 +12,8 @@ module.exports.index = async (req, res) => {
     res.render("listings/index.ejs", {
         allListings,
         category,
-        searchParams: {}
+        searchParams: {},
+        wishlist: req.user ? req.user.wishlist : []
     });
 };
 
@@ -37,7 +39,8 @@ module.exports.showListing = async(req, res) => {
         listing, 
         displayPrice, 
         isTotalPrice, 
-        searchParams: {}
+        searchParams: {},
+        wishlist: req.user ? req.user.wishlist : []
     });
 };
 
@@ -248,4 +251,31 @@ module.exports.calculatePrice = async (req, res) => {
         console.error("[calculatePrice] UNEXPECTED ERROR:", error); // Log the full error to the terminal
         res.status(500).json({ error: "Internal server error during price calculation." });
     }
+};
+
+module.exports.toggleWishlist = async (req, res) => {
+  const { id } = req.params; // The listing ID
+  const userId = req.user._id; // The current user's ID
+  
+  const user = await User.findById(userId);
+  const listing = await Listing.findById(id);
+  if (!user || !listing) {
+    req.flash("error", "Cannot find user or listing");
+    return res.redirect("back");
+  }
+
+  // Check if the listing is already in the wishlist
+  const index = user.wishlist.indexOf(listing._id);
+
+  if (index > -1) {
+    // Listing is in wishlist, so remove it
+    user.wishlist.pull(listing._id);
+    await user.save();
+    res.json({ saved: false, message: "Listing removed from wishlist." });
+  } else {
+    // Listing is not in wishlist, so add it
+    user.wishlist.push(listing._id);
+    await user.save();
+    res.json({ saved: true, message: "Listing added to wishlist." });
+  }
 };

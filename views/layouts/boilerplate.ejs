@@ -64,5 +64,47 @@
 
       <script src="/js/script.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
+      <script>
+      document.addEventListener('click', async (e) => {
+        const saveBtn = e.target.closest('.save-btn'); // Find the save button, even if icon is clicked
+        
+        if (saveBtn) {
+          e.preventDefault(); // Stop link navigation if button is inside <a>
+          
+          const listingId = saveBtn.dataset.listingId;
+          const icon = saveBtn.querySelector('i');
+          
+          try {
+            const response = await fetch(`/listings/${listingId}/save`, {
+              method: 'POST',
+              headers: { 'X-Requested-With': 'XMLHttpRequest' } // Helps server identify fetch
+            });
+
+            // If user is not logged in, middleware will redirect
+            if (response.redirected) {
+              window.location.href = response.url; // Send user to login page
+              return;
+            }
+
+            if (response.ok) {
+              const data = await response.json();
+              
+              // Toggle the heart icon
+              if (data.saved) {
+                icon.classList.remove('fa-regular');
+                icon.classList.add('fa-solid');
+              } else {
+                icon.classList.remove('fa-solid');
+                icon.classList.add('fa-regular');
+              }
+            } else {
+              console.error("Failed to save listing.");
+            }
+          } catch (err) {
+            console.error("Error toggling wishlist:", err);
+          }
+        }
+      });
+    </script>
   </body>
 </html>
