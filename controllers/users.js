@@ -57,7 +57,8 @@ module.exports.showWishlist = async (req, res) => {
   }
 
   res.render("users/wishlist.ejs", {
-    allListings: user.wishlist, // Pass the populated listings
+    allListings: user.wishlist,
+    wishlist: req.user.wishlist, // Pass the populated listings
     category: "My Wishlist",
     searchParams: {}, // For the navbar
   });

@@ -19,9 +19,9 @@ router.route("/login")
 
 
 
-
+router.get("/wishlist", isLoggedIn, wrapAsync(userController.showWishlist));
 router.get("/logout", userController.logout);
 
-router.get("/wishlist", isLoggedIn, wrapAsync(userController.showWishlist));
+
 
 module.exports = router;

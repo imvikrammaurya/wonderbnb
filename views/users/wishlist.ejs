@@ -1,0 +1,60 @@
+<% layout('layouts/boilerplate.ejs') -%>
+<body>
+  <div class="container">
+    <h3 class="mt-3">My Wishlist</h3>
+    
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mt-2">
+      <% if (allListings && allListings.length > 0) { %>
+        <% for( let listing of allListings){ %>
+          <div class="col">
+            <div class="card listing-card h-100">
+              
+              <a href="/listings/<%= listing._id %>?price=<%= listing.price %>" class="listing-link">
+                
+                <% const isSaved = (typeof wishlist !== 'undefined' && wishlist.some(savedId => savedId.equals(listing._id))); %>
+                <button class="save-btn" data-listing-id="<%= listing._id %>">
+                    <i class="fa-<%= isSaved ? 'solid' : 'regular' %> fa-heart"></i>
+                </button>
+                
+                <% if (listing.images && listing.images.length > 0) { %>
+                    <img src="<%= listing.images[0].url %>" class="card-img-top" alt="Listing image" style="height: 20rem;">
+                <% } else { %>
+                    <img src="/images/placeholder.png" class="card-img-top" alt="No image available" style="height: 20rem;">
+                <% } %>
+                
+                <div class="card-img-overlay"></div>
+                
+                <div class="card-body d-flex flex-column">
+                  <div class="card-title-wrapper">
+                    <b><%= listing.title %></b>
+                    <% if (listing.averageRating > 0) { %>
+                      <%
+                        let ratingClass = "";
+                        if (listing.averageRating < 2) ratingClass = "rating-red";
+                        else if (listing.averageRating <= 3.5) ratingClass = "rating-yellow";
+                        else if (listing.averageRating <= 4.7) ratingClass = "rating-green";
+                        else ratingClass = "rating-dark-green";
+                      %>
+                      <div class="rating-badge <%= ratingClass %>">
+                        <%= listing.averageRating.toFixed(1) %>
+                        <i class="fa-solid fa-star"></i>
+                      </div>
+                    <% } %>
+                  </div>
+                  <p class="card-text" data-base-price="<%= listing.price %>">
+                    <b><span class="price-value">&#8377;<%= listing.price.toLocaleString("en-IN") %></span></b> /night
+                    </p>
+                </div>
+              </a>
+            </div>
+          </div>
+        <% } %>
+      <% } else { %>
+        <div class="col-12">
+            <p>You haven't saved any listings yet. Click the heart on any listing to add it to your wishlist!</p>
+        </div>
+      <% } %>
+    </div>
+  </div>
+
+  </body>
