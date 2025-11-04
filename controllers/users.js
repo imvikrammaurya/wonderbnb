@@ -1,5 +1,5 @@
 const User = require("../models/user.js");
-
+const Listing = require("../models/listing.js");
 
 module.exports.renderSignupForm = (req, res) => {
     res.render("users/signup.ejs", {searchParams: {}});
