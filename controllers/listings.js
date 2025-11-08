@@ -156,7 +156,12 @@ module.exports.searchListings = async (req, res) => {
 
     
 
-    res.render("listings/index.ejs", { allListings: updatedListings, category: "Search Results", searchParams: { location, dates, guests } });
+    res.render("listings/index.ejs", { 
+        allListings: updatedListings, 
+        category: "Search Results", 
+        searchParams: { location, dates, guests },
+        wishlist: req.user ? req.user.wishlist : []
+    });
 };
 
 module.exports.renderPaymentPage = async (req, res) => {
