@@ -68,6 +68,18 @@
     text-decoration: none;
     color: inherit;
   }
+
+  .btn-reserve {
+    background-color: #fe423d;
+    border-color: #fe423d;
+    color: white;
+  }
+
+  .btn-reserve:hover {
+    background-color: #e03c37; 
+    border-color: #e03c37;
+    color: white;
+  }
 </style>
     <!-- <h3>All listings</h3> -->
      <div class="row align-items-center">
@@ -106,47 +118,74 @@
 
   <div class="container">
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-      <% for( let listing of allListings){ %>
-        <div class="col">
-          <div class="card listing-card h-100">
-            <a href="/listings/<%= listing._id %>?price=<%= typeof listing.displayPrice !== 'undefined' ? listing.displayPrice : listing.price %>" class="listing-link">
-              <img src="<%= listing.image.url%>" class="card-img-top" alt="Listing image" style="height: 20rem;">
-              <% const isSaved = wishlist.some(savedId => savedId.equals(listing._id)); %>
-  <button class="save-btn" data-listing-id="<%= listing._id %>">
-      <i class="fa-<%= isSaved ? 'solid' : 'regular' %> fa-heart"></i>
-      </button>
-              <div class="card-img-overlay"></div>
-              <div class="card-body d-flex flex-column">
-                <div class="card-title-wrapper">
-                  <b><%= listing.title %></b>
-                  <% if (listing.averageRating > 0) { %>
-                    <%
-                      let ratingClass = "";
-                      if (listing.averageRating < 2) ratingClass = "rating-red";
-                      else if (listing.averageRating <= 3.5) ratingClass = "rating-yellow";
-                      else if (listing.averageRating <= 4.7) ratingClass = "rating-green";
-                      else ratingClass = "rating-dark-green";
-                    %>
-                    <div class="rating-badge <%= ratingClass %>">
-                      <%= listing.averageRating.toFixed(1) %>
-                      <i class="fa-solid fa-star"></i>
-                    </div>
-                  <% } %>
-                </div>
-                <p class="card-text" data-base-price="<%= listing.price %>">
-                  <b><span class="price-value">&#8377;<%= (typeof listing.displayPrice !== 'undefined' ? listing.displayPrice : listing.price).toLocaleString("en-IN") %></span></b>
-                  <% if (typeof listing.displayPrice !== 'undefined') { %>
-                    total
-                  <% } else { %>
-                    /night
-                  <% } %>
+      <% if (allListings && allListings.length > 0) { %>
+  <% for( let listing of allListings){ %>
+    <div class="col">
+      <div class="card listing-card h-100">
+        
+        <% const isSaved = (typeof wishlist !== 'undefined' && wishlist.some(savedId => savedId.equals(listing._id))); %>
+        <button class="save-btn" data-listing-id="<%= listing._id %>">
+            <i class="fa-<%= isSaved ? 'solid' : 'regular' %> fa-heart"></i>
+        </button>
+        
+        <a href="/listings/<%= listing._id %>">
+          <% if (listing.image && listing.image.url) { %>
+              <img src="<%= listing.image.url %>" class="card-img-top" alt="Listing image" style="height: 20rem;">
+          <% } else { %>
+              <img src="/images/placeholder.png" class="card-img-top" alt="No image available" style="height: 20rem;">
+          <% } %>
+        </a>
+
+        <div class="card-body d-flex flex-column">
+          <div class="card-title-wrapper">
+            <b><a href="/listings/<%= listing._id %>" class="listing-link"><%= listing.title %></a></b>
+            
+            <% if (listing.averageRating > 0) { %>
+              <%
+                let ratingClass = "";
+                if (listing.averageRating < 2) ratingClass = "rating-red";
+                else if (listing.averageRating <= 3.5) ratingClass = "rating-yellow";
+                else if (listing.averageRating <= 4.7) ratingClass = "rating-green";
+                else ratingClass = "rating-dark-green";
+              %>
+              <div class="rating-badge <%= ratingClass %>">
+                <%= listing.averageRating.toFixed(1) %>
+                <i class="fa-solid fa-star"></i>
+              </div>
+            <% } %>
+          </div>
+
+          <p class="card-text">
+            <% let price = listing.displayPrice || listing.price; %>
+            <% let priceLabel = listing.displayPrice ? "total" : "/night"; %>
+            <b>&#8377;<%= price.toLocaleString("en-IN") %></b> <%= priceLabel %>
+            <i class="tax-info">&nbsp; &nbsp;+18%gst</i>
+          </p>
+
+          <div class="d-flex gap-2">
+            <a href="/listings/<%= listing._id %>/payment?price=<%= price %>" 
+               class="btn btn-reserve w-100">
+               Reserve
+            </a>
+            <a href="/listings/<%= listing._id %>" 
+               class="btn btn-outline-dark w-100">
+               View Details
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  <% } %>
+<% } else { %>
+  <% } %>
                   <i class="tax-info">&nbsp; &nbsp;+18%gst</i>
                 </p>
               </div>
             </a>
           </div>
         </div>
-      <% } %>
+      
     </div>
   </div>
 

@@ -344,20 +344,20 @@ document.addEventListener('DOMContentLoaded', () => {
         element: widgetCheckinInput,
         elementEnd: widgetCheckoutInput,
         singleMode: false,
-        format: 'DD MMM YYYY', // Use a format that works for parsing
-        minDate: new Date(), // Prevent booking past dates
-        numberOfMonths: 1, // Show one month like Airbnb
-        selectForward: true, // Only allow selecting future dates
+        format: 'DD MMM YYYY', 
+        minDate: new Date(), 
+        numberOfMonths: 1, 
+        selectForward: true, 
         setup: (picker) => {
              picker.on('selected', (date1, date2) => {
-                 updatePrice(); // Update price when dates are selected
+                 updatePrice(); 
              });
          }
     });
     const copyLinkBtn = document.getElementById('copy-link-btn');
     if (copyLinkBtn) {
         copyLinkBtn.addEventListener('click', async () => {
-            const listingUrl = window.location.href; // Gets the current page URL
+            const listingUrl = window.location.href; 
             const originalText = copyLinkBtn.innerHTML;
 
             try {
@@ -366,12 +366,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 // Give user feedback:
                 copyLinkBtn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+                copyLinkBtn.classList.remove('btn-outline-secondary');
                 copyLinkBtn.classList.add('btn-success');
                 
                 // Revert button text after 2 seconds
                 setTimeout(() => {
                     copyLinkBtn.innerHTML = originalText;
                     copyLinkBtn.classList.remove('btn-success');
+                    copyLinkBtn.classList.add('btn-outline-secondary')
                 }, 2000);
 
             } catch (err) {
