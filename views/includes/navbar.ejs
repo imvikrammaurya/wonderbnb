@@ -24,6 +24,11 @@
 
 <nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
   <div class="container-fluid">
+    <% if (typeof showFilterButton !== 'undefined' && showFilterButton) { %>
+          <a class="nav-link" href="#" id="filter-btn" style="margin: 0.5rem;">
+          <i class="fa-solid fa-bars" style="font-size: 1.25rem;"></i>&nbsp;
+          </a>
+    <% } %>
     <div class="d-flex d-md-none align-items-center w-100">
       <a class="navbar-brand" href="/listings"><i class="fa-solid fa-umbrella-beach"></i></a>
       
@@ -41,6 +46,9 @@
 
       <div class="navbar-nav">
         <a class="nav-link" href="/listings">Explore</a>
+
+       
+        
       </div>
 
       <div class="navbar-nav navbar-center d-none d-md-block">

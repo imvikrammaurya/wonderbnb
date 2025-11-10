@@ -3,17 +3,18 @@ const User = require("../models/user");
 
 // COMBINED AND CORRECTED INDEX FUNCTION
 module.exports.index = async (req, res) => {
-    const { category } = req.query; // Get category from query if it exists
-    const filter = category ? { category: category } : {}; // Create a filter if a category is provided
+    const { category } = req.query; 
+    const filter = category ? { category: category } : {}; 
 
-    const allListings = await Listing.find(filter); // Apply the filter
+    const allListings = await Listing.find(filter); 
 
     // Always pass an empty searchParams for the homepage/category pages
     res.render("listings/index.ejs", {
         allListings,
         category,
         searchParams: {},
-        wishlist: req.user ? req.user.wishlist : []
+        wishlist: req.user ? req.user.wishlist : [],
+        showFilterButton: true
     });
 };
 
@@ -160,7 +161,8 @@ module.exports.searchListings = async (req, res) => {
         allListings: updatedListings, 
         category: "Search Results", 
         searchParams: { location, dates, guests },
-        wishlist: req.user ? req.user.wishlist : []
+        wishlist: req.user ? req.user.wishlist : [],
+        showFilterButton: true
     });
 };
 
