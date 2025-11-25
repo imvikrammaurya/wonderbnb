@@ -1,27 +1,27 @@
-body{
-    font-family: "Plus Jakarta Sans", sans-serif !important;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+body {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-.container{
-    flex:1;
+.container {
+  flex: 1;
 }
 
 
-.navbar{
-    height: 5rem;
-    background-color: white;
+.navbar {
+  height: 5rem;
+  background-color: white;
 }
 
-.fa-umbrella-beach{
- color: #fe423d;
- font-size: 2rem;   
+.fa-umbrella-beach {
+  color: #fe423d;
+  font-size: 2rem;
 }
 
-.nav-link{
-    color: #222222 !important;
+.nav-link {
+  color: #222222 !important;
 }
 
 /* In style.css */
@@ -37,7 +37,8 @@ body{
 }
 
 .search-btn i {
-  margin-right: 0.5rem; /* Adds space between icon and text */
+  margin-right: 0.5rem;
+  /* Adds space between icon and text */
 }
 
 /* In style.css */
@@ -53,100 +54,102 @@ body{
 
 /* Footer  */
 .f-info-links a {
-    text-decoration: none;
-    color: #222222;
+  text-decoration: none;
+  color: #222222;
 }
 
-.f-info-links a:hover{
-    text-decoration: underline;
+.f-info-links a:hover {
+  text-decoration: underline;
 }
 
-.f-info-links, .f-info-socials, .f-info-brand{
-    width: 100%;
+.f-info-links,
+.f-info-socials,
+.f-info-brand {
+  width: 100%;
 }
 
-.f-info-socials i{
-    margin-right: 1rem;
-    margin-top: 0.8rem;
-    font-size: 1.2rem;
+.f-info-socials i {
+  margin-right: 1rem;
+  margin-top: 0.8rem;
+  font-size: 1.2rem;
 }
 
 .f-info {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    height: 8rem;
-    align-items: space-evenly;
-    background-color: #ebebeb;
-    text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 8rem;
+  align-items: space-evenly;
+  background-color: #ebebeb;
+  text-align: center;
 }
 
 /* cards  */
 
-.listing-card{
-    border: none !important;
-    margin-bottom: 2rem;
+.listing-card {
+  border: none !important;
+  margin-bottom: 2rem;
 }
 
-.card-img-top{
-    border-radius: 1rem !important;
-    width: 100% !important;
-    object-fit: cover !important;
+.card-img-top {
+  border-radius: 1rem !important;
+  width: 100% !important;
+  object-fit: cover !important;
 }
 
-.card-body{
-    padding: 0 !important;
-    flex-grow: 1;
+.card-body {
+  padding: 0 !important;
+  flex-grow: 1;
 }
 
-.crad-text p{
-    font-weight: 400;
+.crad-text p {
+  font-weight: 400;
 }
 
 
-.listing-link{
-    text-decoration: none;
-    color: #222222;
-    display: block;         
-    flex-direction: column;
-    height: 100%; 
-    position: relative;
+.listing-link {
+  text-decoration: none;
+  color: #222222;
+  display: block;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
 }
 
-.card-img-overlay{
-    opacity: 0;
+.card-img-overlay {
+  opacity: 0;
 }
 
-.card-img-overlay:hover{
-    opacity: 0.2;
-    background-color: #ebebeb;
+.card-img-overlay:hover {
+  opacity: 0.2;
+  background-color: #ebebeb;
 }
 
 
 /* new page styling  */
 
-.add-btn{
-    background-color: #fe423d !important;
-    border: none !important;
+.add-btn {
+  background-color: #fe423d !important;
+  border: none !important;
 }
 
 
 /* show page  */
 
-.show-img{ 
-    height: 30vh;
-    object-fit: cover;
-    width: 100%;
-    border-radius: 1rem;
+.show-img {
+  height: 30vh;
+  object-fit: cover;
+  width: 100%;
+  border-radius: 1rem;
 }
 
-.btns{
-    display: flex;
+.btns {
+  display: flex;
 }
 
-.show-card{
-    padding-left: 0;
-    padding-right: 0;
+.show-card {
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .category-link {
@@ -157,6 +160,7 @@ body{
 .category-link.badge {
   transition: transform 0.1s ease-out;
 }
+
 .category-link.badge:hover {
   background-color: white !important;
   color: black !important;
@@ -165,15 +169,15 @@ body{
 
 .category-link.badge:active {
 
-    background-color: #fe423d !important;
-  color: white !important;               
-  border-color: #fe423d !important; 
-  transform: scale(0.95); 
+  background-color: #fe423d !important;
+  color: white !important;
+  border-color: #fe423d !important;
+  transform: scale(0.95);
 
 }
 
-.edit-btn{
-  background-color: #fe423d !important ;
+.edit-btn {
+  background-color: #fe423d !important;
 }
 
 
@@ -186,11 +190,13 @@ body{
 
 @media (max-width: 768px) {
   .search-inp {
-    width: 200px; /* Make navbar search smaller */
+    width: 200px;
+    /* Make navbar search smaller */
   }
 
   .show-card .btns {
-    flex-direction: column; /* Stack Edit/Delete buttons on show page */
+    flex-direction: column;
+    /* Stack Edit/Delete buttons on show page */
   }
 
   .show-card .btns a,
@@ -208,34 +214,36 @@ body{
     border-radius: 0.5rem;
     margin-top: 0.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-     .d-md-none .search-btn {
-    min-width: 50px;
-  }
- 
-  .position-relative {
-    position: relative;
-  }
+
+    .d-md-none .search-btn {
+      min-width: 50px;
+    }
+
+    .position-relative {
+      position: relative;
+    }
 
 
-  .search-inp-mobile {
-    padding-right: 3rem !important;
-  }
+    .search-inp-mobile {
+      padding-right: 3rem !important;
+    }
 
-  .search-btn-mobile {
+    .search-btn-mobile {
 
-    position: absolute;
-    right: 8px; 
-    top: 50%;
-    transform: translateY(-50%);
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
 
-    background: none !important;
-    border: none !important;
-    padding: 0 !important;
-  }
-  .search-btn-mobile i {
-    color: #222 !important; 
-    font-size: 1.1rem;
-  }
+      background: none !important;
+      border: none !important;
+      padding: 0 !important;
+    }
+
+    .search-btn-mobile i {
+      color: #222 !important;
+      font-size: 1.1rem;
+    }
   }
 }
 
@@ -243,103 +251,34 @@ body{
 
 /* New Search Bar Styles */
 .search-bar {
-    border: 1px solid #ddd;
-    border-radius: 25px;
-    padding: 0.5rem;
-    background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  padding: 0.5rem;
+  background-color: white;
 }
 
 .search-bar-item {
-    padding: 0 1rem;
-    border-right: 1px solid #ddd;
+  padding: 0 1rem;
+  border-right: 1px solid #ddd;
 }
 
 .search-bar-item:last-of-type {
-    border-right: none;
+  border-right: none;
 }
 
 .search-bar-item label {
-    font-size: 0.75rem;
-    font-weight: 600;
-    display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: block;
 }
 
 .search-bar-item input {
-    border: none;
-    outline: none;
-    background: transparent;
-}
-
-.guest-item input {
-    cursor: pointer;
+  border: none;
+  outline: none;
+  background: transparent;
 }
 
 
-/* Guest Dropdown Menu Styles */
-.guest-dropdown-menu {
-    display: none; /* Hidden by default */
-    position: absolute;
-    top: 65px; /* Position it below the navbar */
-    right: 25%;
-    transform: translateX(15%);
-    background-color: white;
-    border-radius: 1rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    padding: 1rem;
-    width: 280px;
-    z-index: 1050;
-}
-
-.guest-option {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-.guest-counter {
-    display: flex;
-    align-items: center;
-}
-
-.counter-btn {
-    border: 1px solid #ddd;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    background: white;
-    color: #222;
-    margin: 0 0.5rem;
-}
-
-
-
-/* ---- RATING STYLES ---- */
-
-/* For the card titles on the index page */
-.card-title-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* Rating badge on the index page cards */
-.rating-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.2rem 0.4rem;
-  border-radius: 0.25rem;
-  color: white !important;
-  font-weight: 700;
-  font-size: 0.9rem;
-  margin-right: 0.4rem;
-  margin-top: 0.5rem;
-}
-
-.rating-badge .fa-star {
-  font-size: 0.7rem;
-  margin-left: 0.25rem;
-}
 
 /* Rating section on the show page */
 .show-rating {
@@ -378,26 +317,59 @@ body{
 }
 
 /* Apply background colors ONLY to the left part */
-.rating-score.rating-red { background-color: #d9534f; }
-.rating-score.rating-yellow { background-color: #f0ad4e; }
-.rating-score.rating-green { background-color: #5cb85c; }
-.rating-score.rating-dark-green { background-color: #4CAF50; }
+.rating-score.rating-red {
+  background-color: #d9534f;
+}
+
+.rating-score.rating-yellow {
+  background-color: #f0ad4e;
+}
+
+.rating-score.rating-green {
+  background-color: #5cb85c;
+}
+
+.rating-score.rating-dark-green {
+  background-color: #4CAF50;
+}
 
 /* Keep the golden star for the highest rating */
 .rating-score.rating-dark-green .fa-star {
-  color: #FFD700; /* Gold */
+  color: #FFD700;
+  /* Gold */
 }
 
 /* Color Classes (reused by both badges) */
-.rating-red { background-color: #d9534f; border-color: #d43f3a; color: #222;}
-.rating-yellow { background-color: #f0ad4e; border-color: #eea236; color: #222;}
-.rating-green { background-color: #5cb85c; border-color: #4cae4c; color: #222;}
-.rating-dark-green { background-color: #4CAF50; border-color: #45a049; color: #222;}
+.rating-red {
+  background-color: #d9534f;
+  border-color: #d43f3a;
+  color: #222;
+}
+
+.rating-yellow {
+  background-color: #f0ad4e;
+  border-color: #eea236;
+  color: #222;
+}
+
+.rating-green {
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+  color: #222;
+}
+
+.rating-dark-green {
+  background-color: #4CAF50;
+  border-color: #45a049;
+  color: #222;
+}
 
 /* Special golden star for the highest rating */
 .rating-dark-green .fa-star {
-  color: #FFD700; /* Gold */
+  color: #FFD700;
+  /* Gold */
 }
+
 /* Makes the star red for low ratings */
 .show-rating.rating-red .fa-star {
   color: #d9534f;
@@ -414,10 +386,25 @@ body{
 }
 
 /* For show page, we only want a colored border, not background */
-.show-rating.rating-red { background-color: white; border-color: #d9534f; }
-.show-rating.rating-yellow { background-color: white; border-color: #f0ad4e; }
-.show-rating.rating-green { background-color: white; border-color: #5cb85c; }
-.show-rating.rating-dark-green { background-color: white; border-color: #4CAF50; }
+.show-rating.rating-red {
+  background-color: white;
+  border-color: #d9534f;
+}
+
+.show-rating.rating-yellow {
+  background-color: white;
+  border-color: #f0ad4e;
+}
+
+.show-rating.rating-green {
+  background-color: white;
+  border-color: #5cb85c;
+}
+
+.show-rating.rating-dark-green {
+  background-color: white;
+  border-color: #4CAF50;
+}
 
 /* In style.css */
 
@@ -427,12 +414,14 @@ body{
 .search-bar-mobile-trigger {
   border: 1px solid #ddd;
   border-radius: 25px;
-  padding: 0.4rem 0.5rem 0.4rem 1rem; /* Adjusted padding */
+  padding: 0.4rem 0.5rem 0.4rem 1rem;
+  /* Adjusted padding */
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Added a subtle shadow */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* Added a subtle shadow */
 }
 
 .search-bar-mobile-text {
@@ -444,7 +433,7 @@ body{
   color: white;
   border-radius: 50%;
   width: 28px;
-  height: 28px; 
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -463,6 +452,7 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
 input[type=number] {
   -moz-appearance: textfield;
 }
@@ -470,13 +460,17 @@ input[type=number] {
 /* Show Page - Flex Layout */
 .show-page-main-content {
   display: flex;
-  flex-wrap: wrap; /* Allow wrapping on smaller screens */
-  gap: 2rem;       /* Space between columns */
-  align-items: flex-start; /* Align columns to the top */
+  flex-wrap: wrap;
+  /* Allow wrapping on smaller screens */
+  gap: 2rem;
+  /* Space between columns */
+  align-items: flex-start;
+  /* Align columns to the top */
 }
 
 .listing-details {
-  flex: 2;         /* Details take approx 2/3rds */
+  flex: 2;
+  /* Details take approx 2/3rds */
   min-width: 300px;
 }
 
@@ -485,7 +479,8 @@ input[type=number] {
   border: 1px solid #ddd;
   border-radius: 0.75rem;
   padding: 1rem;
-  flex: 1;          /* Widget takes approx 1/3rd */
+  flex: 1;
+  /* Widget takes approx 1/3rd */
   min-width: 280px;
 }
 
@@ -504,19 +499,22 @@ input[type=number] {
 }
 
 .guest-item input {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 /* Position the widget's guest dropdown relative to its input */
 .booking-widget .col-12.position-relative .guest-dropdown-menu {
-    top: 100%;
-    right: 0;
-    left: 0;
-    width: 100%;
-    transform: none;
-    margin-top: 0.25rem;
-    /* Ensure dropdown is visible if widget is sticky */
-    z-index: 1021; /* Slightly higher than widget */
+  display: none;
+  /* Hidden by default */
+  top: 100%;
+  right: 0;
+  left: 0;
+  width: 100%;
+  transform: none;
+  margin-top: 0.25rem;
+  /* Ensure dropdown is visible if widget is sticky */
+  z-index: 1021;
+  /* Slightly higher than widget */
 }
 
 /* --- Consolidated Sticky Styles --- */
@@ -525,17 +523,23 @@ input[type=number] {
 .navbar.sticky-top {
   height: 5rem;
   background-color: white;
-  z-index: 1030 !important; /* High z-index */
+  z-index: 1030 !important;
+  /* High z-index */
 }
 
 /* Make widget sticky ONLY on medium screens and up */
 @media (min-width: 768px) {
   .booking-widget.sticky-top {
-    position: sticky !important; /* Apply sticky positioning */
-    top: calc(5rem + 20px);    /* Calculate offset below navbar */
-    z-index: 1020;            /* Lower than navbar */
-    align-self: flex-start;   /* Align widget to top of flex container */
-    height: fit-content;      /* Prevent stretching */
+    position: sticky !important;
+    /* Apply sticky positioning */
+    top: calc(5rem + 20px);
+    /* Calculate offset below navbar */
+    z-index: 1020;
+    /* Lower than navbar */
+    align-self: flex-start;
+    /* Align widget to top of flex container */
+    height: fit-content;
+    /* Prevent stretching */
   }
 }
 
@@ -546,15 +550,15 @@ input[type=number] {
   align-items: center;
   padding: 0.4rem 0.8rem;
   border: 1px solid #ccc;
-  border-radius: 50px; 
-  margin-right: 0.5rem; 
+  border-radius: 50px;
+  margin-right: 0.5rem;
   margin-bottom: 0.5rem;
   font-size: 0.9rem;
-  white-space: nowrap; 
+  white-space: nowrap;
 }
 
 .amenity-pill i {
-  color: #555; 
+  color: #555;
 }
 
 .save-btn {
@@ -581,5 +585,230 @@ input[type=number] {
 }
 
 .save-btn .fa-solid.fa-heart {
-    color: #fe423d; /* Red heart when saved */
+  color: #fe423d;
+  /* Red heart when saved */
+}
+
+/* Sidebar Styles */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -350px;
+  /* Hidden by default */
+  width: 350px;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: left 0.3s ease-in-out;
+  z-index: 1050;
+  /* Above navbar */
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.sidebar-header {
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidebar-header h5 {
+  margin: 0;
+  font-weight: 600;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.sidebar-content {
+  padding: 1rem;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.filter-section {
+  margin-bottom: 1.5rem;
+}
+
+.filter-section h6 {
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.sidebar-footer {
+  padding: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1040;
+  /* Below sidebar, above everything else */
+  display: none;
+}
+
+.sidebar-overlay.show {
+  display: block;
+}
+
+/* Amenities Grid */
+.amenities-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+@media (max-width: 576px) {
+  .sidebar {
+    width: 100%;
+    left: -100%;
+  }
+
+}
+
+
+/* Fix for Card Title and Rating Layout */
+.card-title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  /* Align to top in case title wraps */
+  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+  /* Added margin to separate from image */
+}
+
+.card-title-wrapper .listing-link {
+  flex-grow: 1;
+  /* Title takes available space */
+  margin-right: 0.5rem;
+  /* Space between title and badge */
+}
+
+/* Ensure rating badge doesn't shrink */
+.rating-badge {
+  flex-shrink: 0;
+}
+
+.rating-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.5rem;
+  border-radius: 1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-left: 0.5rem;
+  color: white;
+  /* Ensure text is white for better contrast on colored backgrounds */
+}
+
+.rating-badge i {
+  margin-left: 0.25rem;
+  font-size: 0.75rem;
+}
+
+/* Ensure specific colors for badges override generic ones if needed */
+.rating-badge.rating-green {
+  background-color: #5cb85c;
+}
+
+.rating-badge.rating-dark-green {
+  background-color: #4CAF50;
+}
+
+.rating-badge.rating-yellow {
+  background-color: #f0ad4e;
+}
+
+.rating-badge.rating-red {
+  background-color: #d9534f;
+}
+
+/* Hide Guest Dropdown by default */
+#guest-dropdown {
+  display: none;
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1055;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+/* Position it correctly relative to the navbar guest input if possible, 
+   but since it's in the body, we rely on JS or fixed positioning. 
+   For now, let's just make sure it's hidden. JS toggles 'block'. 
+*/
+
+/* Guest Counter Buttons */
+.widget-counter-btn {
+  border-radius: 50% !important;
+  background-color: white !important;
+  border: 1px solid #ddd !important;
+  /* Thinner border */
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: #717171;
+  /* Standard grey for icons */
+  transition: all 0.2s ease;
+}
+
+.widget-counter-btn:hover {
+  border-color: #222 !important;
+  color: #222;
+}
+
+.widget-counter-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  border-color: #ddd !important;
+  color: #ddd !important;
+}
+
+/* Guest Counter Number */
+.guest-counter span {
+  margin: 0 15px;
+  /* Margin from all sides */
+  font-weight: 400;
+  min-width: 20px;
+  text-align: center;
+}
+
+.guest-counter {
+  display: flex;
+  align-items: center;
+}
+
+.guest-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.guest-option:last-child {
+  margin-bottom: 0;
 }

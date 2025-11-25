@@ -1,14 +1,40 @@
 const Listing = require("../models/listing");
 const User = require("../models/user");
 
-// COMBINED AND CORRECTED INDEX FUNCTION
 module.exports.index = async (req, res) => {
-    const { category } = req.query; 
-    const filter = category ? { category: category } : {}; 
+    const { category, sort, rating, amenities } = req.query;
+    let filter = {};
 
-    const allListings = await Listing.find(filter); 
+    if (category) {
+        filter.category = category;
+    }
 
-    // Always pass an empty searchParams for the homepage/category pages
+    if (rating) {
+        filter.averageRating = { $gte: parseInt(rating) };
+    }
+
+    if (amenities) {
+        let amenitiesList;
+        if (Array.isArray(amenities)) {
+            amenitiesList = amenities;
+        } else {
+            amenitiesList = [amenities];
+        }
+        filter.amenities = { $all: amenitiesList };
+    }
+
+    let query = Listing.find(filter);
+
+    if (sort) {
+        if (sort === 'price_asc') {
+            query = query.sort({ price: 1 });
+        } else if (sort === 'price_desc') {
+            query = query.sort({ price: -1 });
+        }
+    }
+
+    const allListings = await query;
+
     res.render("listings/index.ejs", {
         allListings,
         category,
@@ -19,14 +45,14 @@ module.exports.index = async (req, res) => {
 };
 
 module.exports.renderNewForm = (req, res) => {
-    res.render("listings/new.ejs", {searchParams: {}});
+    res.render("listings/new.ejs", { searchParams: {} });
 };
 
-module.exports.showListing = async(req, res) => {
-    let {id} = req.params;
-    const listing = await Listing.findById(id).populate({path: "reviews", populate : {path: "author",},}).populate("owner");
-    
-    if(!listing){
+module.exports.showListing = async (req, res) => {
+    let { id } = req.params;
+    const listing = await Listing.findById(id).populate({ path: "reviews", populate: { path: "author", }, }).populate("owner");
+
+    if (!listing) {
         req.flash('error', `Listing you requested for does not exist!`);
         return res.redirect("/listings");
     }
@@ -37,9 +63,9 @@ module.exports.showListing = async(req, res) => {
     const isTotalPrice = !!req.query.price && req.query.price !== String(listing.price);
 
     res.render("listings/show.ejs", {
-        listing, 
-        displayPrice, 
-        isTotalPrice, 
+        listing,
+        displayPrice,
+        isTotalPrice,
         searchParams: {},
         wishlist: req.user ? req.user.wishlist : []
     });
@@ -50,46 +76,46 @@ module.exports.createListing = async (req, res, next) => {
     let filename = req.file.filename;
     const newListing = new Listing(req.body.listing);
     newListing.owner = req.user._id;
-    newListing.image = {url, filename};
+    newListing.image = { url, filename };
     await newListing.save();
     req.flash('success', `Successfully added "${newListing.title}"`);
     res.redirect("/listings");
 };
 
 module.exports.renderEditForm = async (req, res) => {
-    let {id} = req.params;
+    let { id } = req.params;
     const listing = await Listing.findById(id);
-    if(!listing){
+    if (!listing) {
         req.flash('error', `Listing you requested for does not exist!`);
         return res.redirect('/listings');
     }
-    if(!listing.owner.equals(res.locals.currUser._id)){
+    if (!listing.owner.equals(res.locals.currUser._id)) {
         req.flash("error", "You don't have permission to edit this listing.");
         return res.redirect(`/listings/${id}`);
     }
 
     let orginalImageUrl = listing.image.url;
     orginalImageUrl = orginalImageUrl.replace("/upload", "/upload/h_300/w_250/");
-    res.render("listings/edit.ejs", {listing, orginalImageUrl , searchParams: {}});
+    res.render("listings/edit.ejs", { listing, orginalImageUrl, searchParams: {} });
 };
 
 module.exports.updateListing = async (req, res) => {
     let { id } = req.params;
     let listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing });
 
-    if(typeof req.file !== "undefined"){
-    let url = req.file.path;
-    let filename = req.file.filename;
-    listing.image = {url, filename};
-    await listing.save();
+    if (typeof req.file !== "undefined") {
+        let url = req.file.path;
+        let filename = req.file.filename;
+        listing.image = { url, filename };
+        await listing.save();
     }
-    
+
     req.flash('success', `Successfully Updated Listing`);
     res.redirect(`/listings/${id}`);
 };
 
-module.exports.destroyListing = async(req, res) => {
-    let {id} = req.params;
+module.exports.destroyListing = async (req, res) => {
+    let { id } = req.params;
     let deletedListing = await Listing.findByIdAndDelete(id);
     console.log(deletedListing);
     req.flash('success', `Successfully deleted`);
@@ -126,7 +152,7 @@ module.exports.searchListings = async (req, res) => {
         // --- THIS IS THE ONLY LINE THAT HAS CHANGED ---
         // It now correctly calculates price based on adults after the first one.
         let totalGuestPrice = listing.price * (1 + (0.10 * (numAdults - 1)));
-        
+
         if (numChildren > 0) {
             totalGuestPrice *= (1 + (0.05 * numChildren));
         }
@@ -151,24 +177,24 @@ module.exports.searchListings = async (req, res) => {
             finalPrice += dailyPrice;
             currentDate.setDate(currentDate.getDate() + 1);
         }
-        
+
         return { ...listing._doc, displayPrice: Math.round(finalPrice) };
     });
 
-    
 
-    res.render("listings/index.ejs", { 
-        allListings: updatedListings, 
-        category: "Search Results", 
-        searchParams: { location, dates, guests },
-        wishlist: req.user ? req.user.wishlist : [],
+
+    res.render("listings/index.ejs", {
+        allListings: updatedListings,
+        category: "Search Results",
+        searchParams: { location, dates, guests },
+        wishlist: req.user ? req.user.wishlist : [],
         showFilterButton: true
-    });
+    });
 };
 
 module.exports.renderPaymentPage = async (req, res) => {
     const { id } = req.params;
-    const price = req.query.price; 
+    const price = req.query.price;
 
     const listing = await Listing.findById(id).populate('reviews').populate('owner');
     if (!listing) {
@@ -184,7 +210,7 @@ module.exports.renderPaymentPage = async (req, res) => {
     res.render('listings/payment.ejs', {
         listing,
         price,
-        searchParams: {} 
+        searchParams: {}
     });
 };
 
@@ -249,7 +275,7 @@ module.exports.calculatePrice = async (req, res) => {
             console.log(`[calculatePrice] Daily price: ${dailyPrice.toFixed(2)}, Cumulative price: ${finalPrice.toFixed(2)}`);
             currentDate.setUTCDate(currentDate.getUTCDate() + 1);
         }
-        
+
         const roundedFinalPrice = Math.round(finalPrice);
         console.log(`[calculatePrice] Final calculated price: ${roundedFinalPrice}`);
         res.json({ newPrice: roundedFinalPrice });
@@ -261,28 +287,28 @@ module.exports.calculatePrice = async (req, res) => {
 };
 
 module.exports.toggleWishlist = async (req, res) => {
-  const { id } = req.params; // The listing ID
-  const userId = req.user._id; // The current user's ID
-  
-  const user = await User.findById(userId);
-  const listing = await Listing.findById(id);
-  if (!user || !listing) {
-    req.flash("error", "Cannot find user or listing");
-    return res.redirect("back");
-  }
+    const { id } = req.params; // The listing ID
+    const userId = req.user._id; // The current user's ID
 
-  // Check if the listing is already in the wishlist
-  const index = user.wishlist.indexOf(listing._id);
+    const user = await User.findById(userId);
+    const listing = await Listing.findById(id);
+    if (!user || !listing) {
+        req.flash("error", "Cannot find user or listing");
+        return res.redirect("back");
+    }
 
-  if (index > -1) {
-    // Listing is in wishlist, so remove it
-    user.wishlist.pull(listing._id);
-    await user.save();
-    res.json({ saved: false, message: "Listing removed from wishlist." });
-  } else {
-    // Listing is not in wishlist, so add it
-    user.wishlist.push(listing._id);
-    await user.save();
-    res.json({ saved: true, message: "Listing added to wishlist." });
-  }
+    // Check if the listing is already in the wishlist
+    const index = user.wishlist.indexOf(listing._id);
+
+    if (index > -1) {
+        // Listing is in wishlist, so remove it
+        user.wishlist.pull(listing._id);
+        await user.save();
+        res.json({ saved: false, message: "Listing removed from wishlist." });
+    } else {
+        // Listing is not in wishlist, so add it
+        user.wishlist.push(listing._id);
+        await user.save();
+        res.json({ saved: true, message: "Listing added to wishlist." });
+    }
 };

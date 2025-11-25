@@ -16,3 +16,33 @@
     }, false)
   })
 })()
+
+// Sidebar Toggle Logic
+document.addEventListener('DOMContentLoaded', () => {
+  const filterBtn = document.getElementById('filter-btn');
+  const sidebar = document.getElementById('sidebar');
+  const closeSidebarBtn = document.getElementById('close-sidebar');
+  const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+  if (filterBtn) {
+    filterBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      sidebar.classList.add('open');
+      sidebarOverlay.classList.add('show');
+    });
+  }
+
+  if (closeSidebarBtn) {
+    closeSidebarBtn.addEventListener('click', () => {
+      sidebar.classList.remove('open');
+      sidebarOverlay.classList.remove('show');
+    });
+  }
+
+  if (sidebarOverlay) {
+    sidebarOverlay.addEventListener('click', () => {
+      sidebar.classList.remove('open');
+      sidebarOverlay.classList.remove('show');
+    });
+  }
+});

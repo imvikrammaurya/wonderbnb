@@ -1,373 +1,431 @@
 <% layout('layouts/boilerplate.ejs') -%>
-<body>
-  <style>
-  /* Main filter container */
-  #filters {
-    display: flex;
-    flex-wrap: nowrap; 
-    overflow-x: auto; 
-    align-items: center;
-    
-    -ms-overflow-style: none;  
-    scrollbar-width: none;  
-  }
 
-  /* Hide scrollbar for Chrome, Safari and Opera */
-  #filters::-webkit-scrollbar {
-    display: none;
-  }
+  <body>
+    <style>
+      /* Main filter container */
+      #filters {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        align-items: center;
 
-  /* Individual filter icons */
-  .filter {
-    text-align: center;
-    margin-right: 2rem;
-    margin-top: 1.2rem;
-    opacity: 0.7;
-    cursor: pointer;
-    flex-shrink: 0; 
-    min-width: 80px; 
-  }
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
 
-  .filter:hover {
-    opacity: 1;
-  }
+      /* Hide scrollbar for Chrome, Safari and Opera */
+      #filters::-webkit-scrollbar {
+        display: none;
+      }
 
-  .filter p {
-    font-size: 0.8rem;
-  }
+      /* Individual filter icons */
+      .filter {
+        text-align: center;
+        margin-right: 2rem;
+        margin-top: 1.2rem;
+        opacity: 0.7;
+        cursor: pointer;
+        flex-shrink: 0;
+        min-width: 80px;
+      }
 
-  /* New styles for the scroll arrow buttons */
-  .filter-scroll-btn {
-    border: 1px solid #ddd;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  }
+      .filter:hover {
+        opacity: 1;
+      }
 
-  /* Tax toggle switch */
-  .tax-toggle {
-    border: 1px solid black;
-    border-radius: 1rem;
-    height: 3.5rem;
-    padding: 1rem;
-    display: flex;
-    align-items: center;
-    flex-shrink: 0; /* Prevent toggle from shrinking */
-  }
+      .filter p {
+        font-size: 0.8rem;
+      }
 
-  .tax-info {
-    display: none;
-  }
+      /* New styles for the scroll arrow buttons */
+      .filter-scroll-btn {
+        border: 1px solid #ddd;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
 
-  .filter-link {
-    text-decoration: none;
-    color: inherit;
-  }
+      /* Tax toggle switch */
+      .tax-toggle {
+        border: 1px solid black;
+        border-radius: 1rem;
+        height: 3.5rem;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+        /* Prevent toggle from shrinking */
+      }
 
-  .btn-reserve {
-    background-color: #fe423d;
-    border-color: #fe423d;
-    color: white;
-  }
+      .tax-info {
+        display: none;
+      }
 
-  .btn-reserve:hover {
-    background-color: #e03c37; 
-    border-color: #e03c37;
-    color: white;
-  }
-</style>
+      .filter-link {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .btn-reserve {
+        background-color: #fe423d;
+        border-color: #fe423d;
+        color: white;
+      }
+
+      .btn-reserve:hover {
+        background-color: #e03c37;
+        border-color: #e03c37;
+        color: white;
+      }
+    </style>
     <!-- <h3>All listings</h3> -->
-     <div class="row align-items-center">
-    <div class="col-md-9 col-12">
-      <div class="position-relative">
-        <button class="btn filter-scroll-btn position-absolute top-50 start-0 translate-middle-y" id="scroll-left" style="z-index: 10;">
-          <i class="fa-solid fa-chevron-left"></i>
-        </button>
-        <div id="filters">
-          <a href="/listings?category=Trending" class="filter-link"><div class="filter"><div><i class="fa-solid fa-fire-flame-curved"></i></div><p>Trending</p></div></a>
-          <a href="/listings?category=Rooms" class="filter-link"><div class="filter"><div><i class="fa-solid fa-bed"></i></div><p>Rooms</p></div></a>
-          <a href="/listings?category=Iconic Cities" class="filter-link"><div class="filter"><div><i class="fa-solid fa-city"></i></div><p>Iconic Cities</p></div></a>
-          <a href="/listings?category=Mountains" class="filter-link"><div class="filter"><div><i class="fa-solid fa-mountain-city"></i></div><p>Mountains</p></div></a>
-          <a href="/listings?category=Castles" class="filter-link"><div class="filter"><div><i class="fa-brands fa-fort-awesome"></i></div><p>Castles</p></div></a>
-          <a href="/listings?category=Amazing Pools" class="filter-link"><div class="filter"><div><i class="fa-solid fa-person-swimming"></i></div><p>Amazing Pools</p></div></a>
-          <a href="/listings?category=Arctic" class="filter-link"><div class="filter"><div><i class="fa-solid fa-snowflake"></i></div><p>Arctic</p></div></a>
-          <a href="/listings?category=Camping" class="filter-link"><div class="filter"><div><i class="fa-solid fa-campground"></i></div><p>Camping</p></div></a>
-          <a href="/listings?category=Dome" class="filter-link"><div class="filter"><div><i class="fa-solid fa-igloo"></i></div><p>Dome</p></div></a>
-          <a href="/listings?category=Boats" class="filter-link"><div class="filter"><div><i class="fa-solid fa-ship"></i></div><p>Boats</p></div></a>
-          <a href="/listings?category=Farms" class="filter-link"><div class="filter"><div><i class="fa-solid fa-cow"></i></div><p>Farms</p></div></a>
-        </div>
-        <button class="btn filter-scroll-btn position-absolute top-50 end-0 translate-middle-y" id="scroll-right" style="z-index: 10;">
-          <i class="fa-solid fa-chevron-right"></i>
-        </button>
-      </div>
-    </div>
-    <div class="col-md-3 col-12 d-none d-md-flex justify-content-md-end justify-content-center">
-      <div class="tax-toggle">
-        <div class="form-check form-switch form-check-reverse">
-          <input class="form-check-input tax-switch" type="checkbox" role="switch" id="switchCheckDesktop">
-          <label class="form-check-label" for="switchCheckDesktop">Display total after taxes</label>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="container">
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-      <% if (allListings && allListings.length > 0) { %>
-  <% for( let listing of allListings){ %>
-    <div class="col">
-      <div class="card listing-card h-100">
-        
-        <% const isSaved = (typeof wishlist !== 'undefined' && wishlist.some(savedId => savedId.equals(listing._id))); %>
-        <button class="save-btn" data-listing-id="<%= listing._id %>">
-            <i class="fa-<%= isSaved ? 'solid' : 'regular' %> fa-heart"></i>
-        </button>
-        
-        <a href="/listings/<%= listing._id %>">
-          <% if (listing.image && listing.image.url) { %>
-              <img src="<%= listing.image.url %>" class="card-img-top" alt="Listing image" style="height: 20rem;">
-          <% } else { %>
-              <img src="/images/placeholder.png" class="card-img-top" alt="No image available" style="height: 20rem;">
-          <% } %>
-        </a>
-
-        <div class="card-body d-flex flex-column">
-          <div class="card-title-wrapper">
-            <b><a href="/listings/<%= listing._id %>" class="listing-link"><%= listing.title %></a></b>
-            
-            <% if (listing.averageRating > 0) { %>
-              <%
-                let ratingClass = "";
-                if (listing.averageRating < 2) ratingClass = "rating-red";
-                else if (listing.averageRating <= 3.5) ratingClass = "rating-yellow";
-                else if (listing.averageRating <= 4.7) ratingClass = "rating-green";
-                else ratingClass = "rating-dark-green";
-              %>
-              <div class="rating-badge <%= ratingClass %>">
-                <%= listing.averageRating.toFixed(1) %>
-                <i class="fa-solid fa-star"></i>
+    <div class="row align-items-center">
+      <div class="col-md-9 col-12">
+        <div class="position-relative">
+          <button class="btn filter-scroll-btn position-absolute top-50 start-0 translate-middle-y" id="scroll-left"
+            style="z-index: 10;">
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+          <div id="filters">
+            <a href="/listings?category=Trending" class="filter-link">
+              <div class="filter">
+                <div><i class="fa-solid fa-fire-flame-curved"></i></div>
+                <p>Trending</p>
               </div>
+            </a>
+            <a href="/listings?category=Rooms" class="filter-link">
+              <div class="filter">
+                <div><i class="fa-solid fa-bed"></i></div>
+                <p>Rooms</p>
+              </div>
+            </a>
+            <a href="/listings?category=Iconic Cities" class="filter-link">
+              <div class="filter">
+                <div><i class="fa-solid fa-city"></i></div>
+                <p>Iconic Cities</p>
+              </div>
+            </a>
+            <a href="/listings?category=Mountains" class="filter-link">
+              <div class="filter">
+                <div><i class="fa-solid fa-mountain-city"></i></div>
+                <p>Mountains</p>
+              </div>
+            </a>
+            <a href="/listings?category=Castles" class="filter-link">
+              <div class="filter">
+                <div><i class="fa-brands fa-fort-awesome"></i></div>
+                <p>Castles</p>
+              </div>
+            </a>
+            <a href="/listings?category=Amazing Pools" class="filter-link">
+              <div class="filter">
+                <div><i class="fa-solid fa-person-swimming"></i></div>
+                <p>Amazing Pools</p>
+              </div>
+            </a>
+            <a href="/listings?category=Arctic" class="filter-link">
+              <div class="filter">
+                <div><i class="fa-solid fa-snowflake"></i></div>
+                <p>Arctic</p>
+              </div>
+            </a>
+            <a href="/listings?category=Camping" class="filter-link">
+              <div class="filter">
+                <div><i class="fa-solid fa-campground"></i></div>
+                <p>Camping</p>
+              </div>
+            </a>
+            <a href="/listings?category=Dome" class="filter-link">
+              <div class="filter">
+                <div><i class="fa-solid fa-igloo"></i></div>
+                <p>Dome</p>
+              </div>
+            </a>
+            <a href="/listings?category=Boats" class="filter-link">
+              <div class="filter">
+                <div><i class="fa-solid fa-ship"></i></div>
+                <p>Boats</p>
+              </div>
+            </a>
+            <a href="/listings?category=Farms" class="filter-link">
+              <div class="filter">
+                <div><i class="fa-solid fa-cow"></i></div>
+                <p>Farms</p>
+              </div>
+            </a>
+          </div>
+          <button class="btn filter-scroll-btn position-absolute top-50 end-0 translate-middle-y" id="scroll-right"
+            style="z-index: 10;">
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+      <div class="col-md-3 col-12 d-none d-md-flex justify-content-md-end justify-content-center">
+        <div class="tax-toggle">
+          <div class="form-check form-switch form-check-reverse">
+            <input class="form-check-input tax-switch" type="checkbox" role="switch" id="switchCheckDesktop">
+            <label class="form-check-label" for="switchCheckDesktop">Display total after taxes</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <% if (allListings && allListings.length> 0) { %>
+          <% for( let listing of allListings){ %>
+            <div class="col">
+              <div class="card listing-card h-100">
+
+                <% const isSaved=(typeof wishlist !=='undefined' && wishlist.some(savedId=>
+                  savedId.equals(listing._id))); %>
+                  <button class="save-btn" data-listing-id="<%= listing._id %>">
+                    <i class="fa-<%= isSaved ? 'solid' : 'regular' %> fa-heart"></i>
+                  </button>
+
+                  <a href="/listings/<%= listing._id %>">
+                    <% if (listing.image && listing.image.url) { %>
+                      <img src="<%= listing.image.url %>" class="card-img-top" alt="Listing image"
+                        style="height: 20rem;">
+                      <% } else { %>
+                        <img src="/images/placeholder.png" class="card-img-top" alt="No image available"
+                          style="height: 20rem;">
+                        <% } %>
+                  </a>
+
+                  <div class="card-body d-flex flex-column">
+                    <div class="card-title-wrapper">
+                      <b><a href="/listings/<%= listing._id %>" class="listing-link">
+                          <%= listing.title %>
+                        </a></b>
+
+                      <% if (listing.averageRating> 0) { %>
+                        <% let ratingClass="" ; if (listing.averageRating < 2) ratingClass="rating-red" ; else if
+                          (listing.averageRating <=3.5) ratingClass="rating-yellow" ; else if (listing.averageRating
+                          <=4.7) ratingClass="rating-green" ; else ratingClass="rating-dark-green" ; %>
+                          <div class="rating-badge <%= ratingClass %>">
+                            <%= listing.averageRating.toFixed(1) %>
+                              <i class="fa-solid fa-star"></i>
+                          </div>
+                          <% } %>
+                    </div>
+
+                    <p class="card-text">
+                      <% let price=listing.displayPrice || listing.price; %>
+                        <% let priceLabel=listing.displayPrice ? "total" : "/night" ; %>
+                          <b>&#8377;<%= price.toLocaleString("en-IN") %></b>
+                          <%= priceLabel %>
+                            <i class="tax-info">&nbsp; &nbsp;+18%gst</i>
+                    </p>
+
+                    <div class="d-flex gap-2">
+                      <a href="/listings/<%= listing._id %>/payment?price=<%= price %>" class="btn btn-reserve w-100">
+                        Reserve
+                      </a>
+                      <a href="/listings/<%= listing._id %>" class="btn btn-outline-dark w-100">
+                        View Details
+                      </a>
+                    </div>
+
+                  </div>
+              </div>
+            </div>
             <% } %>
-          </div>
-
-          <p class="card-text">
-            <% let price = listing.displayPrice || listing.price; %>
-            <% let priceLabel = listing.displayPrice ? "total" : "/night"; %>
-            <b>&#8377;<%= price.toLocaleString("en-IN") %></b> <%= priceLabel %>
-            <i class="tax-info">&nbsp; &nbsp;+18%gst</i>
-          </p>
-
-          <div class="d-flex gap-2">
-            <a href="/listings/<%= listing._id %>/payment?price=<%= price %>" 
-               class="btn btn-reserve w-100">
-               Reserve
-            </a>
-            <a href="/listings/<%= listing._id %>" 
-               class="btn btn-outline-dark w-100">
-               View Details
-            </a>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  <% } %>
-<% } else { %>
-  <% } %>
+              <% } else { %>
+                <% } %>
                   <i class="tax-info">&nbsp; &nbsp;+18%gst</i>
-                </p>
-              </div>
-            </a>
-          </div>
-        </div>
-      
+                  </p>
+      </div>
+      </a>
     </div>
-  </div>
+    </div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-    // Get search params passed from the controller
-    const searchParams = <%- JSON.stringify(searchParams || {}) %>;
+    </div>
+    </div>
 
-    // Parse initial guest counts from the search query
-    let initialAdults = 1;
-    let initialChildren = 0;
-    if (searchParams.guests) {
-        initialAdults = parseInt(searchParams.guests.match(/(\d+) Adult/)?.[1] || '1');
-        initialChildren = parseInt(searchParams.guests.match(/(\d+) Child/)?.[1] || '0');
-    }
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // Get search params passed from the controller
+        const searchParams = <% - JSON.stringify(searchParams || {}) %>;
 
-    // Parse initial dates from search query
-    let initialStartDate = null;
-    let initialEndDate = null;
-    if (searchParams.dates) {
-        const [startStr, endStr] = searchParams.dates.split(' - ');
-        if(startStr) initialStartDate = new Date(startStr);
-        if(endStr) initialEndDate = new Date(endStr);
-    }
+        // Parse initial guest counts from the search query
+        let initialAdults = 1;
+        let initialChildren = 0;
+        if (searchParams.guests) {
+          initialAdults = parseInt(searchParams.guests.match(/(\d+) Adult/)?.[1] || '1');
+          initialChildren = parseInt(searchParams.guests.match(/(\d+) Child/)?.[1] || '0');
+        }
 
-    // CALCULATE THE MAX DATE 
-    const today = new Date();
-    const maxDate = new Date(today);
-    maxDate.setFullYear(today.getFullYear() + 1);
- 
-    // Filter Scroll Logic
-    const filtersContainer = document.getElementById('filters');
-    const scrollLeftButton = document.getElementById('scroll-left');
-    const scrollRightButton = document.getElementById('scroll-right');
-    if (filtersContainer && scrollLeftButton && scrollRightButton) {
-        scrollLeftButton.addEventListener('click', () => filtersContainer.scrollBy({ left: -300, behavior: 'smooth' }));
-        scrollRightButton.addEventListener('click', () => filtersContainer.scrollBy({ left: 300, behavior: 'smooth' }));
-    }
+        // Parse initial dates from search query
+        let initialStartDate = null;
+        let initialEndDate = null;
+        if (searchParams.dates) {
+          const [startStr, endStr] = searchParams.dates.split(' - ');
+          if (startStr) initialStartDate = new Date(startStr);
+          if (endStr) initialEndDate = new Date(endStr);
+        }
 
-      // Guest selection logic
-      function initGuestSelection(guestInputId, guestDropdownId, adultsCountId, childrenCountId, startAdults, startChildren) {
-        const guestInput = document.getElementById(guestInputId);
-        const guestDropdown = document.getElementById(guestDropdownId);
-        if (!guestInput || !guestDropdown) return;
+        // CALCULATE THE MAX DATE 
+        const today = new Date();
+        const maxDate = new Date(today);
+        maxDate.setFullYear(today.getFullYear() + 1);
 
-        if (guestDropdownId === 'mobile-guest-options') {
+        // Filter Scroll Logic
+        const filtersContainer = document.getElementById('filters');
+        const scrollLeftButton = document.getElementById('scroll-left');
+        const scrollRightButton = document.getElementById('scroll-right');
+        if (filtersContainer && scrollLeftButton && scrollRightButton) {
+          scrollLeftButton.addEventListener('click', () => filtersContainer.scrollBy({ left: -300, behavior: 'smooth' }));
+          scrollRightButton.addEventListener('click', () => filtersContainer.scrollBy({ left: 300, behavior: 'smooth' }));
+        }
+
+        // Guest selection logic
+        function initGuestSelection(guestInputId, guestDropdownId, adultsCountId, childrenCountId, startAdults, startChildren) {
+          const guestInput = document.getElementById(guestInputId);
+          const guestDropdown = document.getElementById(guestDropdownId);
+          if (!guestInput || !guestDropdown) return;
+
+          if (guestDropdownId === 'mobile-guest-options') {
             guestDropdown.innerHTML = `
                 <div class="guest-option"><span>Adults</span><div class="guest-counter"><button type="button" class="counter-btn" data-type="adults" data-action="decrement">-</button><span id="${adultsCountId}">${startAdults}</span><button type="button" class="counter-btn" data-type="adults" data-action="increment">+</button></div></div>
                 <div class="guest-option"><span>Children</span><div class="guest-counter"><button type="button" class="counter-btn" data-type="children" data-action="decrement">-</button><span id="${childrenCountId}">${startChildren}</span><button type="button" class="counter-btn" data-type="children" data-action="increment">+</button></div></div>`;
-        }
+          }
 
-        const adultsCountEl = document.getElementById(adultsCountId);
-        const childrenCountEl = document.getElementById(childrenCountId);
-        let adults = startAdults;
-        let children = startChildren;
-        
-        if(adultsCountEl) adultsCountEl.textContent = adults;
-        if(childrenCountEl) childrenCountEl.textContent = children;
+          const adultsCountEl = document.getElementById(adultsCountId);
+          const childrenCountEl = document.getElementById(childrenCountId);
+          let adults = startAdults;
+          let children = startChildren;
 
-        function updateGuestInput() {
+          if (adultsCountEl) adultsCountEl.textContent = adults;
+          if (childrenCountEl) childrenCountEl.textContent = children;
+
+          function updateGuestInput() {
             let guestText = `${adults} Adult${adults > 1 ? 's' : ''}`;
             if (children > 0) guestText += `, ${children} Child${children > 1 ? 'ren' : ''}`;
             guestInput.value = guestText;
-        }
-        updateGuestInput();
+          }
+          updateGuestInput();
 
-        guestInput.addEventListener('click', (event) => {
+          guestInput.addEventListener('click', (event) => {
             event.stopPropagation();
             guestDropdown.style.display = guestDropdown.style.display === 'block' ? 'none' : 'block';
-        });
+          });
 
-        guestDropdown.addEventListener('click', (event) => {
+          guestDropdown.addEventListener('click', (event) => {
             if (event.target.classList.contains('counter-btn')) {
-                const type = event.target.dataset.type;
-                const action = event.target.dataset.action;
-                if (type === 'adults') {
-                    adults = action === 'increment' ? Math.min(4, adults + 1) : Math.max(1, adults - 1);
-                    adultsCountEl.textContent = adults;
-                } else {
-                    children = action === 'increment' ? Math.min(2, children + 1) : Math.max(0, children - 1);
-                    childrenCountEl.textContent = children;
-                }
-                updateGuestInput();
+              const type = event.target.dataset.type;
+              const action = event.target.dataset.action;
+              if (type === 'adults') {
+                adults = action === 'increment' ? Math.min(4, adults + 1) : Math.max(1, adults - 1);
+                adultsCountEl.textContent = adults;
+              } else {
+                children = action === 'increment' ? Math.min(2, children + 1) : Math.max(0, children - 1);
+                childrenCountEl.textContent = children;
+              }
+              updateGuestInput();
             }
-        });
-      }
+          });
+        }
 
-      // Initialize for Desktop (ONLY IF ELEMENTS EXIST)
-    const desktopDatesInput = document.getElementById('dates');
-    const desktopGuestsInput = document.getElementById('guests');
-    if (desktopDatesInput) {
-        new Litepicker({ 
-            element: desktopDatesInput, 
-            singleMode: false, 
-            format: 'DD MMM', 
-            maxDate: maxDate, 
-            startDate: initialStartDate, 
-            endDate: initialEndDate 
-        });
-    }
-    if (desktopGuestsInput) {
-        initGuestSelection('guests', 'guest-dropdown', 'adults-count', 'children-count', initialAdults, initialChildren);
-        
-        // Add the close dropdown listener only if the desktop input exists
-        document.addEventListener('click', (event) => {
+        // Initialize for Desktop (ONLY IF ELEMENTS EXIST)
+        const desktopDatesInput = document.getElementById('dates');
+        const desktopGuestsInput = document.getElementById('guests');
+        if (desktopDatesInput) {
+          new Litepicker({
+            element: desktopDatesInput,
+            singleMode: false,
+            format: 'DD MMM',
+            maxDate: maxDate,
+            startDate: initialStartDate,
+            endDate: initialEndDate
+          });
+        }
+        if (desktopGuestsInput) {
+          initGuestSelection('guests', 'guest-dropdown', 'adults-count', 'children-count', initialAdults, initialChildren);
+
+          // Add the close dropdown listener only if the desktop input exists
+          document.addEventListener('click', (event) => {
             const guestDropdown = document.getElementById('guest-dropdown');
             if (guestDropdown && !desktopGuestsInput.contains(event.target) && !guestDropdown.contains(event.target)) {
-                guestDropdown.style.display = 'none';
+              guestDropdown.style.display = 'none';
             }
-        });
-    }
+          });
+        }
 
-    // Initialize for Mobile (ONLY IF ELEMENTS EXIST)
-    const mobileDatesInput = document.getElementById('mobile-dates');
-    const mobileGuestsInput = document.getElementById('mobile-guests');
-    if (mobileDatesInput) {
-        new Litepicker({ 
-            element: mobileDatesInput, 
-            singleMode: false, 
-            format: 'DD MMM', 
-            maxDate: maxDate, 
-            startDate: initialStartDate, 
-            endDate: initialEndDate 
-        });
-    }
-    if (mobileGuestsInput) {
-        initGuestSelection('mobile-guests', 'mobile-guest-options', 'mobile-adults-count', 'mobile-children-count', initialAdults, initialChildren);
-    }
-
-
+        // Initialize for Mobile (ONLY IF ELEMENTS EXIST)
+        const mobileDatesInput = document.getElementById('mobile-dates');
+        const mobileGuestsInput = document.getElementById('mobile-guests');
+        if (mobileDatesInput) {
+          new Litepicker({
+            element: mobileDatesInput,
+            singleMode: false,
+            format: 'DD MMM',
+            maxDate: maxDate,
+            startDate: initialStartDate,
+            endDate: initialEndDate
+          });
+        }
+        if (mobileGuestsInput) {
+          initGuestSelection('mobile-guests', 'mobile-guest-options', 'mobile-adults-count', 'mobile-children-count', initialAdults, initialChildren);
+        }
 
 
-      
-      const taxSwitches = document.querySelectorAll(".tax-switch");
-      const taxInfos = document.getElementsByClassName("tax-info");
-      taxSwitches.forEach((taxSwitch) => {
-        taxSwitch.addEventListener("click", () => {
+
+
+
+        const taxSwitches = document.querySelectorAll(".tax-switch");
+        const taxInfos = document.getElementsByClassName("tax-info");
+        taxSwitches.forEach((taxSwitch) => {
+          taxSwitch.addEventListener("click", () => {
             for (let info of taxInfos) {
-                info.style.display = taxSwitch.checked ? "inline" : "none";
+              info.style.display = taxSwitch.checked ? "inline" : "none";
             }
+          });
         });
-      });
 
-      // --- SIMPLIFIED AND FIXED HOMEPAGE PRICING LOGIC ---
-      const isHomepage = !new URLSearchParams(window.location.search).has('location');
-      if (isHomepage) {
+        // --- SIMPLIFIED AND FIXED HOMEPAGE PRICING LOGIC ---
+        const isHomepage = !new URLSearchParams(window.location.search).has('location');
+        if (isHomepage) {
           const dayOfWeek = today.getDay();
           let multiplier = 1.0;
 
           if (dayOfWeek === 6 || dayOfWeek === 0) { // Sat or Sun
-              multiplier = 1.4;
+            multiplier = 1.4;
           } else if (dayOfWeek === 3 || dayOfWeek === 5) { // Wed or Fri
-              multiplier = 1.2;
+            multiplier = 1.2;
           }
 
           if (multiplier > 1.0) {
-              document.querySelectorAll('[data-base-price]').forEach(priceParagraph => {
-    const basePrice = parseFloat(priceParagraph.dataset.basePrice);
-    const newPrice = Math.round(basePrice * multiplier);
-    
-    // Update the displayed text (as before)
-    const priceValueElement = priceParagraph.querySelector('.price-value');
-    if (priceValueElement) {
-        priceValueElement.textContent = `₹${newPrice.toLocaleString('en-IN')}`;
-    }
+            document.querySelectorAll('[data-base-price]').forEach(priceParagraph => {
+              const basePrice = parseFloat(priceParagraph.dataset.basePrice);
+              const newPrice = Math.round(basePrice * multiplier);
 
-    // --- ADD THIS PART ---
-    // Find the parent link element
-    const linkElement = priceParagraph.closest('.listing-link'); 
-    if (linkElement) {
-        // Get the current URL
-        const currentUrl = new URL(linkElement.href);
-        // Update the 'price' query parameter
-        currentUrl.searchParams.set('price', newPrice);
-        // Set the link's href to the new URL
-        linkElement.href = currentUrl.toString();
-    }
-    // --- END ---
-});
+              // Update the displayed text (as before)
+              const priceValueElement = priceParagraph.querySelector('.price-value');
+              if (priceValueElement) {
+                priceValueElement.textContent = `₹${newPrice.toLocaleString('en-IN')}`;
+              }
+
+              // --- ADD THIS PART ---
+              // Find the parent link element
+              const linkElement = priceParagraph.closest('.listing-link');
+              if (linkElement) {
+                // Get the current URL
+                const currentUrl = new URL(linkElement.href);
+                // Update the 'price' query parameter
+                currentUrl.searchParams.set('price', newPrice);
+                // Set the link's href to the new URL
+                linkElement.href = currentUrl.toString();
+              }
+              // --- END ---
+            });
           }
-      }
-    });
-  </script>
-</body>
-
+        }
+      });
+    </script>
+  </body>
