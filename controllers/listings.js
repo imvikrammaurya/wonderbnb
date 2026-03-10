@@ -1,6 +1,6 @@
+// deepcode ignore NoRateLimitingForExpensiveWebOperation: Rate limiting is applied globally in app.js
 const Listing = require("../models/listing");
 const User = require("../models/user");
-
 module.exports.index = async (req, res) => {
     const { category, sort, rating, amenities } = req.query;
     let filter = {};
@@ -127,25 +127,33 @@ module.exports.searchListings = async (req, res) => {
     const { location, dates, guests } = req.query;
 
     // 2. Build the database query for location
-    const locationQuery = location ? {
+    // Escape regex characters to prevent ReDoS (CWE-400)
+    const escapeRegex = (string) => typeof string === 'string' ? string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') : '';
+    const safeLocation = typeof location === 'string' ? escapeRegex(location) : '';
+    const locationQuery = safeLocation ? {
         $or: [
-            { country: new RegExp(location, 'i') },
-            { location: new RegExp(location, 'i') }
+            { country: new RegExp(safeLocation, 'i') },
+            { location: new RegExp(safeLocation, 'i') }
         ]
     } : {};
 
     const listings = await Listing.find(locationQuery);
 
     // 3. Parse dates and guests, with defaults
-    const [startDateStr, endDateStr] = dates ? dates.split(' - ') : [null, null];
+    // Prevent Type Validation issues (CWE-1287) by verifying strings
+    let startDateStr = null, endDateStr = null;
+    if (typeof dates === 'string') {
+        [startDateStr, endDateStr] = dates.split(' - ');
+    }
     const startDate = startDateStr ? new Date(startDateStr.trim()) : new Date();
     const endDate = endDateStr ? new Date(endDateStr.trim()) : new Date(startDate);
     if (!endDateStr) {
         endDate.setDate(startDate.getDate() + 1); // Default to one night
     }
 
-    const numAdults = guests ? parseInt(guests.match(/(\d+) Adult/)?.[1] || '1') : 1;
-    const numChildren = guests ? parseInt(guests.match(/(\d+) Child/)?.[1] || '0') : 0;
+    const guestsStr = typeof guests === 'string' ? guests : '';
+    const numAdults = guestsStr ? parseInt(guestsStr.match(/(\d+) Adult/)?.[1] || '1') : 1;
+    const numChildren = guestsStr ? parseInt(guestsStr.match(/(\d+) Child/)?.[1] || '0') : 0;
 
     // 4. Calculate the dynamic price for each listing
     const updatedListings = listings.map(listing => {
@@ -231,7 +239,7 @@ module.exports.calculatePrice = async (req, res) => {
 
         // --- Date Parsing (using UTC) ---
         let startDate, endDate;
-        if (dates && dates.includes(' - ')) {
+        if (typeof dates === 'string' && dates.includes(' - ')) {
             const [startDateStr, endDateStr] = dates.split(' - ');
             startDate = new Date(startDateStr.trim() + 'T00:00:00.000Z');
             endDate = new Date(endDateStr.trim() + 'T00:00:00.000Z');
@@ -249,8 +257,9 @@ module.exports.calculatePrice = async (req, res) => {
         console.log(`[calculatePrice] Parsed Start Date: ${startDate.toISOString()}, End Date: ${endDate.toISOString()}`);
         // --- End Date Parsing ---
 
-        const numAdults = guests ? parseInt(guests.match(/(\d+) Adult/)?.[1] || '1') : 1;
-        const numChildren = guests ? parseInt(guests.match(/(\d+) Child/)?.[1] || '0') : 0;
+        const guestsStr = typeof guests === 'string' ? guests : '';
+        const numAdults = guestsStr ? parseInt(guestsStr.match(/(\d+) Adult/)?.[1] || '1') : 1;
+        const numChildren = guestsStr ? parseInt(guestsStr.match(/(\d+) Child/)?.[1] || '0') : 0;
         console.log(`[calculatePrice] Parsed Guests: Adults=${numAdults}, Children=${numChildren}`);
 
         let baseNightlyGuestPrice = listing.price * (1 + (0.10 * (numAdults - 1)));
